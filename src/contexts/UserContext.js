@@ -1,5 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import {AuthContext} from "./AuthContext";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+import Share from 'react-native-share';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { firestore } from "../firebase.config";
 import firestore from '@react-native-firebase/firestore';
@@ -9,16 +11,55 @@ import { completeHandlerIOS } from "react-native-fs";
 
 export const UserContext = createContext({});
 
+async function buildLink(id, vidTitle) {
+  const link = await dynamicLinks().buildShortLink({
+      link: `https://mobiwood.page.link/${id}`,
+      domainUriPrefix: `https://mobiwood.page.link`,
+      navigation: {
+          forcedRedirectEnabled: true,
+      },
+      android: {
+          packageName: 'net.mobiwood',
+          fallbackUrl: 'https://mobiwood.page.link',
+
+        },
+      social: {
+          title: vidTitle,
+      }
+  });
+
+  return link;
+}
+
 const UserContextProvider = ({ children }) => {
   const [likedVideos, setLikedVideos] = useState([]);
   const [myVideos, setMyVideos] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [vidShared, setVidShared] = useState('');
   const [likedVideosMap, setLikedVideosMap] = useState(new Map());
   const { userDetails, uid } = useContext(AuthContext);
   const [fllwingMap, setFllwingMap] = useState(new Map());
   // const { videos } = useContext(VideosContext);
+  const handleShare = (id, vidTitle) => {
+    buildLink(id, vidTitle).then(link => {
+        // console.log(`${link}`);
+        const title = `${vidTitle}`;
+        // const message = 'Please check this out on the uDanta App "Your Home for News"\n';
+        const message = `${vidTitle} \n \n${`Checkout This Video`}"\n\n`;
 
+
+        const options = {
+            title,
+            subject: title,
+            message: `${message} ${link}`,
+        }
+
+        Share.open(options)
+          .then(res => { console.log(res); analytics().logEvent('Normal_Share',{name:'normal_share_button'})})
+          .catch(err => { err && console.log(err); });
+    })
+  };
   useEffect(() => {
     // alert(`a : ${JSON.stringify(userDetails)}`)
     if (userDetails) {
@@ -69,6 +110,7 @@ const UserContextProvider = ({ children }) => {
         };
         
         // if (uid && videosFromSession) {
+          // checkDynamicLink();
           if(uid)
           {
             fetchMyVideos();
@@ -181,13 +223,16 @@ const UserContextProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         likedVideos:likedVideos,
-        updateLikes:updateLikes,
+        vidShared:vidShared,
         likedVideosMap:likedVideosMap,
         fllwingMap:fllwingMap,
         myVideos:myVideos,
+        following:following,
         followers:followers,
         updateFollowers:updateFollowers,
-        following:following,
+        handleShare:handleShare,
+        setVidShared:setVidShared,
+        updateLikes:updateLikes,
         updateFollowing:updateFollowing,
       }}
     >
