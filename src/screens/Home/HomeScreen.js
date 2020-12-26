@@ -1,14 +1,19 @@
 import React,{useState} from 'react'
-import {Text, View, Share, SafeAreaView} from 'react-native'
+import {Text, View, Share, Dimensions, SafeAreaView, ToastAndroid, Modal, TouchableOpacity, Alert, Platform} from 'react-native'
 import HeaderIcon from '../../HOC/HeaderIcon.js';
 import { ScaledSheet } from 'react-native-size-matters';
+import firestore from '@react-native-firebase/firestore';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from 'react-native-responsive-screen';
 import {Colors, Typography} from '../../constants';
 import ImageGrid from '../../components/ImageGrid'
+import RadioButtonRN from 'radio-buttons-react-native';
  
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const TrendingName = ({name}) =>{
     return(
@@ -25,6 +30,26 @@ const Category = ({name}) => {
         </View>
     );
 }
+const data = [
+  {
+    label: 'Spam/Misleading'
+   },
+   {
+    label: 'Abusive'
+   },
+   {
+    label: 'Harmful'
+   },
+   {
+    label: 'Illegal'
+   },
+   {
+    label: 'Inappropriate'
+   },
+   {
+    label: 'Copyright Infringement'
+   }
+  ];
 const onShare = async () => {
     try {
       const result = await Share.share({
@@ -47,14 +72,87 @@ const onShare = async () => {
 
 export default HeaderIcon(function HomeScreen(){
     const [modalVisible,setModalVisible] = useState(false)
-    const toggleModal = (val) =>{
-        setModalVisible(val)
+    const [reportValue,setReportValue] = useState("");
+    const [vidId, setVidId] = useState('');
+    const [vidItem, setVidItem] = useState({});
+    const toggleModal = (id, item, val) =>{
+        setVidId(id);
+        setVidItem(item);
+        setModalVisible(val);
         //getData()
     }
+    const handleReport = () => {
+      console.log(`vidId : ${vidId}, post : ${JSON.stringify(vidItem)}`)
+      setModalVisible(false);
+      if(reportValue != ""){
+        firestore()
+        .collection("report")
+        .doc(vidId)
+        .get()
+        .then(async res => {
+          const data = res.data();
+          console.log(`data from reporting ; ${data}`)
+          let newReports = 0;
+          if (data&&data.reports) {
+            newReports = data.reports + 1;
+          }
+          firestore()
+            .collection("report")
+            .doc(vidId)
+            .set({
+              ...vidItem,
+              reports: newReports || 1,
+            })
+            .then(() => {
+              // setReportAlert(true)
+              if(Platform.OS === "android")
+              ToastAndroid.show("Report has been Submitted", ToastAndroid.LONG);
+              else
+              Alert.alert(`Report has been Submitted`);
+            })
+            .catch(err => {
+              Alert.alert(`${err}`)
+            })
+        })
+        .catch(err => {
+          console.log(`err : ${JSON.stringify(err)}`)
+          Alert.alert(`${err}`)
+        })
+      }
+    }
     return(
-          <SafeAreaView style={styles.releaseCont}>
-            <ImageGrid shareModal={onShare} />
-          </SafeAreaView>
+      <SafeAreaView style={{flex:1}}>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false)
+        }}
+      >
+        <View style={{justifyContent:'flex-end',flex:1, backgroundColor:'rgba(0,0,0,0.8)'}}>
+            <View style={styles.centeredView}>
+              <Text style={{fontSize:24,textAlign:'center',margin:15,fontWeight:'700',color:'black'}}>Report Content</Text>
+            <RadioButtonRN
+                data={data}
+                style={{width:'90%',alignSelf:'center'}}
+                selectedBtn={(e) => setReportValue(e)}
+              />
+            <View style={{flexDirection:'row',justifyContent:'space-evenly',marginTop:25}}>
+              <TouchableOpacity onPress={()=>setModalVisible(false)} style={{justifyContent:'center'}}>
+                <Text style={{fontSize:24,fontWeight:'700',color:'red'}}>CANCEL</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=>handleReport()}>
+                <Text style={{fontSize:24,fontWeight:'700',color:'skyblue'}}>OK</Text>
+              </TouchableOpacity>
+            </View>
+            </View>
+        </View>
+      </Modal>
+        <View style={styles.releaseCont}>
+          <ImageGrid reportModal = {toggleModal} shareModal={onShare} />
+        </View>
+      </SafeAreaView>
     )
 })
 
@@ -137,5 +235,23 @@ const styles = ScaledSheet.create({
       gridContainer:{
           paddingTop:"25@ms"
       },
-      
+      centeredView: {
+        height:windowHeight/1.3,
+        width:windowWidth,
+        borderRadius:20,
+        // justifyContent:'center',
+        alignSelf:'center',
+        // alignItems: "center",
+        backgroundColor: "white",
+        // padding: 35,
+        // alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+      },
 })
