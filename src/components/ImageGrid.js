@@ -54,9 +54,12 @@ export default function ImageGrid(props){
                         videoContext.setVidLikesMap(tmp);
                       })
                     }}>
-                  <Text style={{fontSize:17}}><FeatherIcon name='thumbs-up' size={20} color={videoContext.vidLikesMap.get(item.id)?'red':'black'} />  {videoContext.vidLikesMap.get(item.id)}</Text>
+                    <Text style={{fontSize:17}}><FeatherIcon name='thumbs-up' size={20} color={videoContext.vidLikesMap.get(item.id)?'red':'black'} />  {videoContext.vidLikesMap.get(item.id)}</Text>
                   </TouchableOpacity>
-                  <Text style={{marginLeft:20, fontSize:17}} ><FeatherIcon  onPress={props.shareModal}  name='share-2' size={20} color='black' /> {item.shares?item.shares:0}</Text>
+                  <TouchableOpacity style={{marginLeft:20}} onPress={()=>{usrCntxt.handleShare(item.id, item.description)}}>
+                    <Text style={{marginLeft:20, fontSize:17}} ><FeatherIcon  name='share-2' size={20} color='black' /> {item.shares?item.shares:0}</Text>
+                  </TouchableOpacity>
+                  
                   <Text style={{marginLeft:20, fontSize:17,}}><FeatherIcon name='eye' size={20} color='black' /> {videoContext.noOfViewsMap.get(item.id)}</Text> 
                   </View> 
                 </View>
