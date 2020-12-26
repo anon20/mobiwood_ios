@@ -1,0 +1,36 @@
+{
+    "userDetails" : 
+    {
+        "uid":"3pqThZcvdOUoOBIh9dvXyC3Ako72",
+        "photoURL":null,"providerId":"firebase",
+        "emailVerified":true,
+        "email":"anuragpal0226@gmail.com",
+        "providerData":
+        [
+            {"providerId":"password",
+            "displayName":"Anurag Pal",
+            "photoURL":null,
+            "uid":"anuragpal0226@gmail.com",
+            "phoneNumber":null,
+            "email":"anuragpal0226@gmail.com"}
+        ],
+        "isAnonymous":false,
+        "displayName":"Anurag Pal",
+        "phoneNumber":null,
+        "metadata":{
+            "creationTime":1606295866847,
+            "lastSignInTime":1608743035441
+        }
+    },
+    "userData":
+    {
+        "username":"anuragpal",
+        "email":"anuragpal0226@gmail.com",
+        "last_login_datetime":{"seconds":1608743037,"nanoseconds":227000000},
+        "followers":[],
+        "likedVideos":[],
+        "following":[],
+        "account_creation_datetime":"Wed, 25 Nov 2020 09:17:46 GMT",
+        "name":"Anurag Pal"
+    }
+}
