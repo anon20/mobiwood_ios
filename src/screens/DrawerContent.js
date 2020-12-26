@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,Image} from 'react-native'
+import {View,Text,Image, SafeAreaView} from 'react-native'
 import {
     DrawerContentScrollView,
     DrawerItem
@@ -21,7 +21,7 @@ const logout = () => {
 
 export default function DrawerContent(props){
    return(
-       <View style={{flex:1}}>
+       <SafeAreaView style={{flex:1}}>
          <DrawerContentScrollView {...props} style={styles.container}> 
            <View style={styles.logoContainer}>
               <Image 
@@ -81,7 +81,7 @@ export default function DrawerContent(props){
            
             </View>
          </DrawerContentScrollView>
-       </View>
+       </SafeAreaView>
    );
 }
 

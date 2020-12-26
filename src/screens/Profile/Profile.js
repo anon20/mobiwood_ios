@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {View, Text, Image,StyleSheet,FlatList,Dimensions,Modal, TouchableOpacity} from 'react-native';
+import {View, Text, Image, SafeAreaView, StyleSheet, FlatList, Dimensions, Modal, TouchableOpacity} from 'react-native';
 import {UserContext} from '../../contexts/UserContext.js';
 import {AuthContext} from "../../contexts/AuthContext.js";
 import VideoPlayer from 'react-native-video-player';
@@ -27,7 +27,7 @@ export default props => {
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnail,setThumbnail] = useState('');
     return (
-        <View style={{flex:1}}>
+        <SafeAreaView style={{flex:1}}>
         <Modal
             animationType="fade"
             transparent={true}
@@ -49,52 +49,6 @@ export default props => {
                     style={{height:windowHeight/1.45,width:windowWidth-50, borderTopStartRadius:20, borderTopEndRadius:20}}
                     thumbnail={{uri: thumbnail}}
                   />
-                {/* <TouchableHighlight
-                  style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </TouchableHighlight>
-               */}
-                {/* <View style={{flexDirection:'row', paddingTop:10, paddingLeft:10}}>
-                  <View style={{alignSelf:'flex-start', flexDirection:'row'}}>
-                    <TouchableOpacity onPress={()=>{
-                      usrCntxt.updateLikes(vidId)
-                      firestore().collection("contest").doc(vidId).update({
-                        likes: likes+1,
-                      })
-                      .then(()=>{
-                        setVidLiked(true);
-                      })
-                    }}>
-                      <Text style={{color:!vidLiked?'black':'pink', fontSize:20}}> <FeatherIcon name='thumbs-up' size={25} color='black' />  {likes?likes:0}  </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Text style={{color:'black',fontSize:20}}> <FeatherIcon  name='share-2' size={25} color='black' />  {shares?shares:0}  </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{
-                      firestore().collection("contest").doc(vidId).update({
-                        views: views+1,
-                      });
-                    }}>
-                      <Text style={{fontSize:20}}> <FeatherIcon  name='eye' size={25} color='black' />  {views?views:0}</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={{position:'absolute', right:10, top:8}}>
-                    <TouchableOpacity onPress={()=>{
-                      usrCntxt.updateFollowing("follow", vidUploaderId)
-                      .then(()=>{
-                        setFollowing(true);
-                      })
-                    }}>
-                      <Text style={{backgroundColor:following?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:20}}>{following?'Following':'Follow'}</Text>
-                    </TouchableOpacity>
-                  </View>
-                  
-                  
-                </View> */}
                 </View>
             </View>
             
@@ -110,8 +64,8 @@ export default props => {
                         />
                         <Text style={{fontSize:20,fontWeight:'700',alignSelf:'center', marginBottom:10}}>{userDetails.providerData[0].displayName}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around',marginTop:5}}>
-                                <Text style={{fontSize:16,fontWeight:'400'}}>Followers : {userCont.followers.length!=0?userCont.followers.length:0} </Text>
-                                <Text style={{fontSize:16,fontWeight:'400'}}>Following : {userCont.following.length!=0?userCont.following.length:0} </Text>
+                                <Text style={{fontSize:16,fontWeight:'400'}}>Followers : {userCont.followers&&userCont.followers.length!=0?userCont.followers.length:0} </Text>
+                                <Text style={{fontSize:16,fontWeight:'400'}}>Following : {userCont.following&&userCont.following.length!=0?userCont.following.length:0} </Text>
                         </View>
                     </View>
                     <View style={{width:'100%',height:1,backgroundColor:"black"}}></View>
@@ -144,7 +98,7 @@ export default props => {
                     <Text>HELLO</Text>
                 </View>
             }
-        </View>
+        </SafeAreaView>
 
     )
 };

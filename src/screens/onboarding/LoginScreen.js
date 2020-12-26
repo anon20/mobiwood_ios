@@ -11,23 +11,14 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-community/google-signin';
-import Separator from '../../components/Separator';
 import InputField from '../../components/InputField';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import styles from './style';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {AuthContext} from '../../contexts/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import TNC from '../../components/TNC';
 import IconClose from 'react-native-vector-icons/Ionicons';
-import { widthPercentageToDP } from 'react-native-responsive-screen';
 
 const loginValidationSchema = yup.object().shape({
   username: yup.string().required('Username is Required'),

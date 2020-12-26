@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,Image,View} from 'react-native';
+import {Text,Image,View, SafeAreaView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/Home/HomeScreen';
 const Stack = createStackNavigator();
@@ -17,12 +17,9 @@ import {
 import auth from '@react-native-firebase/auth';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import DrawerContent from '../screens/DrawerContent';
-import Home from '../screens/Home/HomeScreen';
-import UserContext from '../contexts/UserContext.js';
 import ContestRegistration from '../screens/Contests/ContestRegistration';
 import Upload from '../screens/Contests/Upload';
 import UnderAge from '../screens/Contests/UnderAge';
-import { LoginScreen } from '../screens';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 function SettingsScreen() {
   return (
@@ -82,14 +79,14 @@ function ProfileStack() {
       headerMode="screen"
       screenOptions={({navigation}) => ({					
         //title: 'hello',
-    headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+    headerTitle: (<SafeAreaView><Image source={image} style={{width:142, height:41}} /></SafeAreaView>),
     headerTitleStyle: {
       fontWeight: 'bold',
       alignSelf:'center',
       height:70,
     },
         headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         },
         headerRight: () => (
           <TouchableOpacity style={[styles.btn],{display:'none'}} onPress={() => logout()}>
@@ -100,7 +97,7 @@ function ProfileStack() {
           <TouchableOpacity
             style={[styles.menu]}
             onPress={() => navigation.openDrawer()}>
-            <FeatherIcon name="menu" size={25} color='white' />
+            <FeatherIcon name="menu" size={25} color='black' />
 			
           </TouchableOpacity>
         ),
@@ -116,7 +113,7 @@ function HomeStack() {
       headerMode="screen"
       screenOptions={({navigation}) => ({					
         //title: 'hello',
-    headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+    headerTitle: (<SafeAreaView><Image source={image} style={{width:142, height:41}} /></SafeAreaView>),
     headerTitleStyle: {
       fontWeight: 'bold',
       alignSelf:'center',

@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,Image, Dimensions,ScrollView,ToastAndroid,ActivityIndicator} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,Image, SafeAreaView, Dimensions,ScrollView,ToastAndroid,ActivityIndicator, Platform} from 'react-native';
 //import HeaderIcon from '../../HOC/HeaderIcon.js';
 import Video from 'react-native-video';
 import ImagePicker from 'react-native-image-picker';
@@ -178,11 +178,9 @@ const UploadScreen = (props) => {
     }
 
     return(
+      <SafeAreaView style={{flex:1}}>
         <ScrollView style={{flex:1}}>
-            
-            
-            
-            {!isUploading?<View>
+          {!isUploading?<View>
               <View style={styles.uploadView}>
             <Text style={{textAlign:'center',fontSize:24,padding:20, display:'none'}}>Upload A Video</Text>
               {filePath.uri&&
@@ -278,7 +276,10 @@ const UploadScreen = (props) => {
               <Checkbox
                 value={isSelected}
                 onValueChange={setSelection}
+                checkboxSize={30}
+                CheckboxIconSize={30}     
                 style={styles.checkbox}
+                // lineWidth={10}
               />
               <Text style={{marginTop:28}}>Are you participating as a group?</Text>
       </View>
@@ -301,6 +302,7 @@ const UploadScreen = (props) => {
             
             
         </ScrollView>
+      </SafeAreaView>
     )
 }
 
@@ -355,7 +357,8 @@ const styles  = StyleSheet.create ({
     },
     checkbox: {
       alignSelf: "center",
-      marginTop:20,
+      marginTop:Platform.OS==="ios"?25:20,
+      height:Platform.OS==="ios"?20:30,
     },
     label: {
       margin: 8,

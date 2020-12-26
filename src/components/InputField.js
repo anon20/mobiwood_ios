@@ -50,6 +50,7 @@ const Styles= ScaledSheet.create({
     borderWidth: 1,
     borderRadius:"3@ms",
     paddingLeft:10,
+    marginBottom:20,
     // padding:15,
     width:wp('90%'),
     backgroundColor:"white",
