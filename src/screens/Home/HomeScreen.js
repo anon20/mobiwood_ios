@@ -50,25 +50,7 @@ const data = [
     label: 'Copyright Infringement'
    }
   ];
-const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+
 
 export default HeaderIcon(function HomeScreen(){
     const [modalVisible,setModalVisible] = useState(false)
@@ -150,7 +132,7 @@ export default HeaderIcon(function HomeScreen(){
         </View>
       </Modal>
         <View style={styles.releaseCont}>
-          <ImageGrid reportModal = {toggleModal} shareModal={onShare} />
+          <ImageGrid reportModal = {toggleModal} />
         </View>
       </SafeAreaView>
     )
