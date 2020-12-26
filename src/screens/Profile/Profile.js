@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {View, Text, Image, SafeAreaView, StyleSheet, FlatList, Dimensions, Modal, TouchableOpacity} from 'react-native';
 import {UserContext} from '../../contexts/UserContext.js';
 import {AuthContext} from "../../contexts/AuthContext.js";
+import {VideosContext} from '../../contexts/VideosContext.js';
 import VideoPlayer from 'react-native-video-player';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
@@ -11,6 +12,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default props => {
     let userCont = React.useContext(UserContext);
+    const vidCntxt = React.useContext(VideosContext);
     const { userDetails, uid } = React.useContext(AuthContext);
     React.useEffect(()=>{
         // userCont.updateFollowers();
@@ -72,7 +74,7 @@ export default props => {
                     {/* {console.log(`MYVIDEOS : ${JSON.stringify(userCont.myVideos)}`)} */}
                     {userCont.myVideos!=""? 
                     <FlatList 
-                        data={userCont.myVideos}
+                        data={vidCntxt.videos.filter(item=>item.userid === uid)}
                         numColumns={3}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item, index})=>(
