@@ -9,6 +9,7 @@ import {View,
   SafeAreaView,
   Dimensions,
   Modal,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ExploreVideoBottom from '../../components/ExploreVideoBottom';
@@ -99,7 +100,7 @@ export default props => {
                     }}>
                       <Text style={{color:'black', fontSize:20}}> <FeatherIcon name='thumbs-up' size={25} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'black':'red'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=>{usrCntxt.handleShare(vidObj.id, vidObj.description)}}>
                       <Text style={{color:'black',fontSize:20}}> <FeatherIcon  name='share-2' size={25} color='black' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
                       <Text style={{fontSize:20}}> <FeatherIcon  name='eye' size={25} color='black' /> {vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
@@ -110,10 +111,18 @@ export default props => {
                         if(resp === "followed"||resp === "unfollowed")
                         {
                           if(Platform.OS === "android")
-                            if(resp === "followed")
+                          {  if(resp === "followed")
                             ToastAndroid.show(`Following `, ToastAndroid.LONG)
                             else
                             ToastAndroid.show(`Unfollowed `, ToastAndroid.LONG)
+                          }
+                          else (Platform.OS === "ios")
+                          {
+                            if(resp === "followed")
+                            Alert.alert(`Following `, ToastAndroid.LONG)
+                            else
+                            Alert.alert(`Unfollowed `, ToastAndroid.LONG)
+                          }
                         }
                       })
                     }}>
@@ -148,8 +157,6 @@ export default props => {
             <View style={{flex:1,marginTop:10}}>
               <ExploreVideoBottom searchKeyword={searchKeyword} setSearchVid={setSearchVid} searchVid={searchVid} clicked={HandleClick}/>
             </View>
-      
-            
         </SafeAreaView>
     )
 }
