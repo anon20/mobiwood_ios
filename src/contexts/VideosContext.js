@@ -53,9 +53,11 @@ const VideosContextProvider = ({ children }) => {
             setNoOfViewsMap(tempNoOfViewsMap);
             const checkDynamicLink = async () => {
               const link = await dynamicLinks().getInitialLink();
-              // usrCntxt.setVidShared(link);
-              console.log(`checking dynamic link`)
-              usrCntxt.setVidShared(link);
+              
+              // usrCntxt.setVidShared(link.url);
+              //console.log(link)
+              if(link)
+              usrCntxt.setVidShared(link.url);
             }
             checkDynamicLink();
             setVideos(vids);

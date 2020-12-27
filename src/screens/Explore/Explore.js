@@ -7,6 +7,7 @@ import {View,
   ToastAndroid,
   Platform,
   SafeAreaView,
+  ActivityIndicator,
   Dimensions,
   Modal,
   Alert,
@@ -16,7 +17,6 @@ import ExploreVideoBottom from '../../components/ExploreVideoBottom';
 import VideoPlayer from 'react-native-video-player';
 import {VideosContext} from '../../contexts/VideosContext.js';
 const windowWidth = Dimensions.get('window').width;
-
 import FeatherIcon from 'react-native-vector-icons/Feather';
 const windowHeight = Dimensions.get('window').height;
 import {UserContext} from '../../contexts/UserContext.js';
@@ -27,6 +27,7 @@ export default props => {
  
   const [modalVisible, setModalVisible] = useState(false);
   const [vidObj, setVidObj] = useState({});
+  const [followProcessing, setFollowProcessing] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const vidCntxt = React.useContext(VideosContext);
   const usrCntxt = React.useContext(UserContext);
@@ -107,26 +108,33 @@ export default props => {
                   </View>
                   <View style={{position:'absolute', right:10, top:8}}>
                     <TouchableOpacity onPress={()=>{
+                      setFollowProcessing(true);
                       usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidObj.userid)?"unfollow":"follow", vidObj.userid).then(resp=>{
                         if(resp === "followed"||resp === "unfollowed")
                         {
+                          // console.log(`resp from follow button : ${resp}, platform : ${Platform.OS}`)
+                          setFollowProcessing(false);
                           if(Platform.OS === "android")
-                          {  if(resp === "followed")
-                            ToastAndroid.show(`Following `, ToastAndroid.LONG)
+                          {  
+                            if(resp === "followed")
+                              ToastAndroid.show("Following", ToastAndroid.LONG)
                             else
-                            ToastAndroid.show(`Unfollowed `, ToastAndroid.LONG)
+                              ToastAndroid.show("Unfollowed", ToastAndroid.LONG)
                           }
-                          else (Platform.OS === "ios")
+                          else
                           {
                             if(resp === "followed")
-                            Alert.alert(`Following `, ToastAndroid.LONG)
+                              Alert.alert("Following")
                             else
-                            Alert.alert(`Unfollowed `, ToastAndroid.LONG)
+                              Alert.alert("Unffolowed")
                           }
                         }
                       })
                     }}>
-                      <Text style={{backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:20}}>{usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}</Text>
+                      <Text style={{backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:20}}>{followProcessing?
+                      <ActivityIndicator animating={followProcessing} color="white" />
+                      :
+                      usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

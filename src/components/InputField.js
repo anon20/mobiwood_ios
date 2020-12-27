@@ -36,7 +36,7 @@ const InputField = ({leftIcon, floatingInput = true, ...props}) => {
   
         <View style={{width: '100%', alignSelf:'center'}}>
             <TextInput 
-              style={[Styles.inputContainer,{padding:Platform.OS==="ios"?15:0}]}
+              style={[Styles.inputContainer,{padding:Platform.OS==="ios"?15:10}]}
               underlineColorAndroid="transparent"
               {...props}/>
         </View>
