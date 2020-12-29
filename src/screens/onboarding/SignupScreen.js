@@ -50,13 +50,14 @@ const signUpValidationSchema = yup.object().shape({
 
 const SignupScreen = ({navigation}) => {
   const [radioValue, setRadioValue] = useState("a18");
-  const [modalVisible,setModalVisible] = useState(false)
+  const [modalVisible,setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const[isLoading,setLoading] = useState(false)
   const toggleTnc = (val) => {  
     setModalVisible(val)
   }
   const togglePrivacy = (val) => {  
-    setModalVisible(val)
+    setModalVisible2(val)
   }
   return (
     <SafeAreaView>
@@ -269,7 +270,7 @@ const SignupScreen = ({navigation}) => {
                             toggleTnc(false)
                             }}
                         >
-                            <View style={styles.modalContent}>
+                            <SafeAreaView style={styles.modalContent}>
                                 <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                     <Text style={styles.heading}>Terms & Conditions</Text>
                                      <IconClose.Button
@@ -283,18 +284,18 @@ const SignupScreen = ({navigation}) => {
                                 <ScrollView>
                                     <TNC />
                                </ScrollView>
-                            </View>
-                        </Modal>
+                            </SafeAreaView>
+                  </Modal>
 
                         <Modal
                             animationType="slide"
                             transparent={true}
-                            visible={modalVisible}
+                            visible={modalVisible2}
                             onRequestClose={() => {
-                            togglePrivacy(false)
+                            setModalVisible2(false)
                             }}
                         >
-                            <View style={styles.modalContent}>
+                            <SafeAreaView style={styles.modalContent}>
                                 <View style={{flexDirection:"row",justifyContent:"space-between"}}>
                                     <Text style={styles.heading}>Privacy Policy</Text>
                                      <IconClose.Button
@@ -302,13 +303,13 @@ const SignupScreen = ({navigation}) => {
                                         size={25}
                                         color="black"
                                         backgroundColor="white"
-                                        onPress={() => togglePrivacy(false)}
+                                        onPress={() => setModalVisible2(false)}
                                         />
                                 </View>
                                 <ScrollView>
                                     <Privacy />
                                </ScrollView>
-                            </View>
+                            </SafeAreaView>
                         </Modal>
                   
                         <View style={[styles.altText, {marginTop:-10}]}>
