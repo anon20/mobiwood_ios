@@ -43,7 +43,7 @@ export default props => {
       quality:0.5
     };
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
+      // console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -71,12 +71,15 @@ export default props => {
             console.log(err);
           },
           () => {
+            console.log(`Profile photo has been updated!`)
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              console.log(`downloadURL : ${downloadURL}`);
               firestore()
                 .collection("user")
                 .doc(uid)
                 .update({profile_photo:downloadURL})
                 .then(() => {
+                  console.log(`Profile photo has been linked!`)
                   if(Platform.OS==="android")
                     ToastAndroid.show(`Profile Photo Updated!`, ToastAndroid.LONG);
                   else
@@ -116,9 +119,10 @@ export default props => {
             </View>
             
           </Modal>
+            {alert(`userCont :  ${JSON.stringify(userDetails)}`)}
             {userCont?
                 <>
-
+                
                 <View style={{flex:1}}>
                     <View style={{marginBottom:20}}>
                       <View style={{backgroundColor:'red',height:windowHeight/5.5,
@@ -128,7 +132,7 @@ export default props => {
 
                       
                         <Image
-                            source={{uri: userDetails.profile_photo?userDetails.profile_photo:filePath.uri}}
+                            source={{uri: userCont.profile_photo?userCont.profile_photo:filePath.uri}}
                             style={{height:windowHeight/5.5,width:windowWidth/3,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
 
                         />
