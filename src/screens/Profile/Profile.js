@@ -4,6 +4,7 @@ import {UserContext} from '../../contexts/UserContext.js';
 import {AuthContext} from "../../contexts/AuthContext.js";
 import {VideosContext} from '../../contexts/VideosContext.js';
 import VideoPlayer from 'react-native-video-player';
+import ImagePicker from 'react-native-image-picker';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 
@@ -28,6 +29,46 @@ export default props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnail,setThumbnail] = useState('');
+  const [filePath, setFilePath] = useState({});
+
+  const chooseFile = () => {
+    let options = {
+      title: 'Select Image',
+      customButtons: [
+        {
+          name: 'customOptionKey',
+          title: 'Choose Photo from Custom Option'
+        },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log(
+          'User tapped custom button: ',
+          response.customButton
+        );
+        alert(response.customButton);
+      } else {
+        let source = response;
+        // You can also display the image using data:
+        // let source = {
+        //   uri: 'data:image/jpeg;base64,' + response.data
+        // };
+        setFilePath(source);
+      }
+    });
+  };
+
     return (
         <SafeAreaView style={{flex:1}}>
         <Modal
@@ -60,11 +101,28 @@ export default props => {
 
                 <View style={{flex:1}}>
                     <View style={{marginBottom:20}}>
+                      <View style={{backgroundColor:'red',height:windowHeight/5.5,
+                      width:windowWidth/3,alignSelf:'center',
+                      elevation:10,
+                      marginTop:20,borderRadius:1000}}>
+
+                      
                         <Image
-                            source={require('../../assets/images/usericon.png')}
-                            style={{height:50,width:50,alignSelf:'center', marginTop:20}}
+                            source={{uri: filePath.uri}}
+                            style={{height:windowHeight/5.5,width:windowWidth/3,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
+
                         />
-                        <Text style={{fontSize:20,fontWeight:'700',alignSelf:'center', marginBottom:10}}>{userDetails.providerData[0].displayName}</Text>
+
+                    <TouchableOpacity
+                          activeOpacity={0.5}
+                          style={{backgroundColor:'black',width:40,alignSelf:'flex-end',top:-windowHeight/20,borderRadius:200}}
+                          onPress={chooseFile}>
+                               <FeatherIcon name="plus" size={40} color={'white'} />
+                            
+                        </TouchableOpacity>
+                      </View>
+                
+                        <Text style={{fontSize:20,fontWeight:'700',alignSelf:'center', marginBottom:10,marginTop:20}}>{userDetails.providerData[0].displayName}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around',marginTop:5}}>
                                 <Text style={{fontSize:16,fontWeight:'400'}}>Followers : {userCont.followers&&userCont.followers.length!=0?userCont.followers.length:0} </Text>
                                 <Text style={{fontSize:16,fontWeight:'400'}}>Following : {userCont.following&&userCont.following.length!=0?userCont.following.length:0} </Text>

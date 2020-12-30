@@ -62,5 +62,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>Mobiwood Needs Camera Permission</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Mobiwood Needs Microphone Permission</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Mobiwood Needs Photo Storage Permission</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Mobiwood Needs Media Storage Permission</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Permission</string>
 </dict>
 </plist>
