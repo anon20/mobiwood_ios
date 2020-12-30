@@ -132,7 +132,7 @@ export default props => {
 
                       
                         <Image
-                            source={{uri: userCont.photoURL?userCont.photoURL:filePath.uri}}
+                            source={{uri: userCont.profilePhoto?userCont.profilePhoto:filePath.uri}}
                             style={{height:windowHeight/5.5,width:windowWidth/3,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
 
                         />
