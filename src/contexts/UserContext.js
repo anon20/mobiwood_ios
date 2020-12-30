@@ -36,6 +36,7 @@ const UserContextProvider = ({ children }) => {
   const [myVideos, setMyVideos] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
+  const [profilePhoto, setProfilePhoto] = useState('');
   const [vidShared, setVidShared] = useState('');
   const [likedVideosMap, setLikedVideosMap] = useState(new Map());
   const { userDetails, uid } = useContext(AuthContext);
@@ -79,6 +80,7 @@ const UserContextProvider = ({ children }) => {
           let likedVidMap = new Map();
           let tmpFllwingMp = new Map();
           setLikedVideos(userData.likedVideos);
+          setProfilePhoto(resp.photoURL)
           // console.log(`resp :${JSON.stringify(resp.data())}`);
           // console.log(`likedVideos : ${userData["likedVideos"]}`)
           // if(resp)
@@ -229,6 +231,8 @@ const UserContextProvider = ({ children }) => {
         myVideos:myVideos,
         following:following,
         followers:followers,
+        profilePhoto:profilePhoto,
+        setProfilePhoto:setProfilePhoto,
         updateFollowers:updateFollowers,
         handleShare:handleShare,
         setVidShared:setVidShared,
