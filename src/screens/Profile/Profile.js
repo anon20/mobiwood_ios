@@ -1,13 +1,13 @@
 import React,{useState} from 'react';
-import {View, Text, Image, SafeAreaView, StyleSheet, FlatList, Dimensions, Modal, TouchableOpacity} from 'react-native';
+import {View, Text, Image, SafeAreaView, StyleSheet, ToastAndroid, FlatList, Dimensions, Modal, TouchableOpacity, Platform, Alert} from 'react-native';
 import {UserContext} from '../../contexts/UserContext.js';
 import {AuthContext} from "../../contexts/AuthContext.js";
 import {VideosContext} from '../../contexts/VideosContext.js';
 import VideoPlayer from 'react-native-video-player';
 import ImagePicker from 'react-native-image-picker';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-
-
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -30,20 +30,17 @@ export default props => {
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnail,setThumbnail] = useState('');
   const [filePath, setFilePath] = useState({});
+  const [uploadPercent, setUploadPercent] = useState(0);
+
 
   const chooseFile = () => {
     let options = {
       title: 'Select Image',
-      customButtons: [
-        {
-          name: 'customOptionKey',
-          title: 'Choose Photo from Custom Option'
-        },
-      ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
+      quality:0.5
     };
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -52,19 +49,42 @@ export default props => {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log(
-          'User tapped custom button: ',
-          response.customButton
-        );
-        alert(response.customButton);
       } else {
         let source = response;
-        // You can also display the image using data:
-        // let source = {
-        //   uri: 'data:image/jpeg;base64,' + response.data
-        // };
+        let imgName = "prf_img_"+uid;
+        let metadata = {
+          contentType: "image/png",
+        };
+        let uploadTask = storage()
+        .ref()
+        .child("profile/" + imgName)
+        .putFile(Platform.OS==="ios"?source.path:source.uri, metadata);
         setFilePath(source);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            let progress = parseInt((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setUploadPercent(progress);
+            console.log("Upload is " + progress + "% done");
+          },
+          (err) => {
+            console.log(err);
+          },
+          () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              firestore()
+                .collection("user")
+                .doc(uid)
+                .update({profile_photo:downloadURL})
+                .then(() => {
+                  if(Platform.OS==="android")
+                    ToastAndroid.show(`Profile Photo Updated!`, ToastAndroid.LONG);
+                  else
+                    Alert.alert(`Profile Photo Updated!`);
+                });
+            });
+          }
+        );
       }
     });
   };
@@ -108,7 +128,7 @@ export default props => {
 
                       
                         <Image
-                            source={{uri: filePath.uri}}
+                            source={{uri: userDetails.profile_photo?userDetails.profile_photo:filePath.uri}}
                             style={{height:windowHeight/5.5,width:windowWidth/3,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
 
                         />
@@ -148,7 +168,7 @@ export default props => {
                     </View>)
                          }
             /> : <Text style={{justifyContent:'center',alignSelf:'center',marginTop:80,fontWeight:'700',fontSize:18, textAlign:'center', color:'grey'}}>
-              <FeatherIcon name="video-off" size={50} color={'grey'} />{"\n"}{"\n"}No Videos Uploaded</Text>}
+              <FeatherIcon name="video-off" size={50} color={'grey'} />{"\n"}{"\n"}No Videos Uploaded Yet!</Text>}
                 </View>
                 
                 

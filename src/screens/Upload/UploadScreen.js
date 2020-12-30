@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import {View,StyleSheet,Text,TouchableOpacity,Image, SafeAreaView, Dimensions,ScrollView,ToastAndroid,ActivityIndicator, Platform} from 'react-native';
+import {View,StyleSheet,Text,TouchableOpacity,Image, SafeAreaView, Dimensions,ScrollView,ToastAndroid,ActivityIndicator, Platform, Alert} from 'react-native';
 //import HeaderIcon from '../../HOC/HeaderIcon.js';
 import Video from 'react-native-video';
 import ImagePicker from 'react-native-image-picker';
@@ -161,7 +161,10 @@ const UploadScreen = (props) => {
                     .doc(vid)
                     .set(uploadData)
                     .then(() => {
+                      if(Platform.OS==="android")
                       ToastAndroid.show("Video Uploaded Successfully!", ToastAndroid.LONG);
+                      else
+                      Alert.alert(`Video Uploaded Successfully`);
                       setIsUploading(false);
                       // setTalent('');
                       setTitle('');
