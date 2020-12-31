@@ -80,7 +80,7 @@ const UserContextProvider = ({ children }) => {
           let likedVidMap = new Map();
           let tmpFllwingMp = new Map();
           setLikedVideos(userData.likedVideos);
-          setProfilePhoto(resp.photoURL)
+          setProfilePhoto(userData.profile);
           // console.log(`resp :${JSON.stringify(resp.data())}`);
           // console.log(`likedVideos : ${userData["likedVideos"]}`)
           // if(resp)
