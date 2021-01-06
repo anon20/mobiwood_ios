@@ -29,11 +29,24 @@ function SettingsScreen() {
   );
 }
 
-function Construction() {
+function support() {
   return (
-    <View style={{flex: 1,  padding:50, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{alignSelf:'center',fontSize:24,fontWeight:'700'
-    }}>Under Construction ...</Text>
+    <View style={{flex: 1,  padding:20,}}>
+      <Text style={{alignSelf:'center', marginBottom:20, marginTop:20}}><FeatherIcon name="help-circle" size={50} color='black' /></Text>
+      <Text style={{fontSize:20, textAlign:'center'
+    }}>
+      In case you have a query you can freely contact us at support@mobiwood.net</Text>
+    </View>
+  );
+}
+
+function feedback() {
+  return (
+    <View style={{flex: 1,  padding:20,}}>
+      <Text style={{alignSelf:'center', marginBottom:20, marginTop:20}}><FeatherIcon name="smile" size={50} color='black' /></Text>
+      <Text style={{fontSize:20, textAlign:'center'
+    }}>
+      Your experience is important for us to build a better way for the upcoming talented generation. { "\n"}{ "\n"}Kindly, provide us with your feedback at feedback@mobiwood.net and help us to get better.</Text>
     </View>
   );
 }
@@ -64,13 +77,15 @@ export default function DrawerStack() {
       initialRouteName="Profile"
       drawerContent={(props) => <DrawerContent {...props} />}
       drawerStyle={{
+        //color of the side drawer
         backgroundColor: '#000000',
       }}
-      sceneContainerStyle={{backgroundColor: 'black'}}>
+      sceneContainerStyle={{backgroundColor: 'white'}}>
       <Drawer.Screen name="Profile" component={ProfileStack} />
       <Drawer.Screen name="Home" component={HomeStack} />
       <Drawer.Screen name="Contest" component={ContestStack} />
-      <Drawer.Screen name="Construction" component={SampleStack}/>
+      <Drawer.Screen name="support" component={SupportStack}/>
+      <Drawer.Screen name="feedback" component={FeedbackStack}/>
     </Drawer.Navigator>
   );
 }
@@ -79,12 +94,12 @@ function ProfileStack() {
       headerMode="screen"
       screenOptions={({navigation}) => ({					
         //title: 'hello',
-    headerTitle: (<SafeAreaView><Image source={image} style={{width:142, height:41, marginTop:10}} /></SafeAreaView>),
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      alignSelf:'center',
-      height:70,
-    },
+        headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignSelf:'center',
+          height:50,
+      },
         headerStyle: {
         backgroundColor: 'white',
         },
@@ -97,7 +112,9 @@ function ProfileStack() {
           <TouchableOpacity
             style={[styles.menu]}
             onPress={() => navigation.openDrawer()}>
-            <FeatherIcon name="menu" size={25} color='black' />
+              <Text>
+              <FeatherIcon name="menu" size={25} color='black' />
+              </Text>
 			
           </TouchableOpacity>
         ),
@@ -147,9 +164,11 @@ function ContestStack() {
     <Stack.Navigator
       headerMode="screen"
       screenOptions={({navigation}) => ({
-        title: '',
+        //header for the contest screen
+        headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+        
         headerStyle: {
-          backgroundColor: 'black',
+          backgroundColor: 'white',
         },
         // headerRight: () => (
         //   <TouchableOpacity style={styles.btn} onPress={() => logout()}>
@@ -160,7 +179,7 @@ function ContestStack() {
           <TouchableOpacity
             style={styles.menu}
             onPress={() => navigation.openDrawer()}>
-            <Icon name="menu" size={32} color={Colors.PRIMARY} />
+            <Icon name="menu" size={32} color={'black'} />
           </TouchableOpacity>
         ),
       })}>
@@ -175,14 +194,17 @@ function ContestStack() {
 }
 
 
-function SampleStack() {
+function SupportStack() {
   return (
     <Stack.Navigator
       headerMode="screen"
       screenOptions={({navigation}) => ({
-        title: '',
+        // title: '',
+        headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+
         headerStyle: {
-          backgroundColor: 'black',
+          //color for support header
+          backgroundColor: 'white',
         },
         // headerRight: () => (
         //   <TouchableOpacity style={styles.btn} onPress={() => logout()}>
@@ -193,13 +215,48 @@ function SampleStack() {
           <TouchableOpacity
             style={styles.menu}
             onPress={() => navigation.openDrawer()}>
-            <Icon name="menu" size={32} color={Colors.PRIMARY} />
+            <Icon name="menu" size={32} color={'black'} />
           </TouchableOpacity>
         ),
       })}>
       <Stack.Screen
-        name="Construction"
-        component={Construction}
+        name="support"
+        component={support}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function FeedbackStack() {
+  return (
+    <Stack.Navigator
+      headerMode="screen"
+      screenOptions={({navigation}) => ({
+        headerTitle: (<Image source={image} style={{width:142, height:41}} />),
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignSelf:'center',
+          height:50,
+      },
+        headerStyle: {
+          backgroundColor: 'white',
+        },
+        // headerRight: () => (
+        //   <TouchableOpacity style={styles.btn} onPress={() => logout()}>
+        //     <Text style={styles.txt}>Logout</Text>
+        //   </TouchableOpacity>
+        // ),
+        headerLeft: () => (
+          <TouchableOpacity
+            style={styles.menu}
+            onPress={() => navigation.openDrawer()}>
+            <Icon name="menu" size={32} color={'black'} />
+          </TouchableOpacity>
+        ),
+      })}>
+      <Stack.Screen
+        name="feedback"
+        component={feedback}
       />
     </Stack.Navigator>
   );

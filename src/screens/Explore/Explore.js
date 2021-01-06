@@ -49,15 +49,15 @@ export default props => {
               setVidObj({});
             }}
           >
-            <View style={{justifyContent:'center',flex:1, backgroundColor:'rgba(0,0,0,0.8)'}}>
+            <View style={{justifyContent:'center',flex:1}}>
                 <View style={styles.centeredView}>
-                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', borderRadius:1000, borderWidth:2, borderColor:'black', position:'absolute', zIndex:10, top:-10, right:-10, alignSelf:'flex-end'}}>
+                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', position:'absolute', zIndex:10, top:15, right:15, alignSelf:'flex-end', borderRadius:3}}>
                   
                     <FeatherIcon  name='x' size={30} color='grey' />
                 </TouchableOpacity>
                 <VideoPlayer
                     video={{uri:vidObj.videoUrl}}
-                    style={{height:windowHeight/1.45,width:windowWidth-50, borderTopStartRadius:20, borderTopEndRadius:20}}
+                    style={{height:windowHeight/1.26, width:windowWidth}}
                     thumbnail={{uri: vidObj.thumbnail}}
                     onPlayPress={()=>{
                       firestore().collection("contest").doc(vidObj.id).update({
@@ -83,7 +83,9 @@ export default props => {
                   <Text style={styles.textStyle}>Hide Modal</Text>
                 </TouchableHighlight>
                */}
-                <View style={{flexDirection:'row', paddingTop:10, paddingLeft:10}}>
+               
+            </View>
+            <View style={{flexDirection:'row', paddingTop:15, paddingBottom:15, paddingLeft:20, backgroundColor:'rgb(0,0,0)', position:'absolute', width:'100%', bottom:75}}>
                   <View style={{alignSelf:'flex-start', flexDirection:'row'}}>
                     <TouchableOpacity onPress={()=>{
                       usrCntxt.updateLikes(vidObj.id, vidCntxt.vidLikesMap.get(vidObj.id)).then(reslt => {
@@ -99,14 +101,14 @@ export default props => {
                       })
                       
                     }}>
-                      <Text style={{color:'black', fontSize:20}}> <FeatherIcon name='thumbs-up' size={25} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'black':'red'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
+                      <Text style={{color:'white', fontSize:20, marginTop:3, marginRight:8}}> <FeatherIcon name='thumbs-up' size={25} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'white':'red'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{usrCntxt.handleShare(vidObj.id, vidObj.description)}}>
-                      <Text style={{color:'black',fontSize:20}}> <FeatherIcon  name='share-2' size={25} color='black' />  {vidObj.shares?vidObj.shares:0}  </Text>
+                      <Text style={{color:'white',fontSize:20, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={25} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
-                      <Text style={{fontSize:20}}> <FeatherIcon  name='eye' size={25} color='black' /> {vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
+                      <Text style={{fontSize:20, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={25} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
                   </View>
-                  <View style={{position:'absolute', right:10, top:8}}>
+                  <View style={{top:8, position:'absolute', right:115, marginTop:6}}>
                     <TouchableOpacity onPress={()=>{
                       setFollowProcessing(true);
                       usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidObj.userid)?"unfollow":"follow", vidObj.userid).then(resp=>{
@@ -131,7 +133,7 @@ export default props => {
                         }
                       })
                     }}>
-                      <Text style={{backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:20}}>{followProcessing?
+                      <Text style={{backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:18, fontWeight:'600', position:'absolute'}}>{followProcessing?
                       <ActivityIndicator animating={followProcessing} color="white" />
                       :
                       usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}</Text>
@@ -139,8 +141,6 @@ export default props => {
                   </View>
                 </View>
                 </View>
-            </View>
-            
           </Modal>
   
           <View style={styles.searchContainer}>
@@ -182,22 +182,22 @@ const styles  = StyleSheet.create ({
     },
     centeredView: {
       height:windowHeight/1.3,
-      width:windowWidth-50,
-      borderRadius:20,
+      width:windowWidth,
       // justifyContent:'center',
-      alignSelf:'center',
+      position:'absolute',
+      top:50,
       // alignItems: "center",
       backgroundColor: "white",
       // padding: 35,
       // alignItems: "center",
       shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 100
+      // },
+      // shadowOpacity:0.8,
+      // shadowRadius: 3.84,
+      // elevation: 100
     },
     
     openButton: {

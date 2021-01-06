@@ -125,31 +125,28 @@ export default props => {
                 
                 <View style={{flex:1}}>
                     <View style={{marginBottom:20}}>
-                      <View style={{backgroundColor:'red',height:windowHeight/5.5,
-                      width:windowWidth/3,alignSelf:'center',
-                      elevation:10,
-                      marginTop:20,borderRadius:1000}}>
+                      <View style={{backgroundColor:'black',borderRadius:1000, width:150, height:150,alignSelf:'center', marginTop:20}}>
 
                       
                         <Image
                             source={{uri: userCont.profilePhoto?userCont.profilePhoto:filePath.uri}}
-                            style={{height:windowHeight/5.5,width:windowWidth/3,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
+                            style={{width:150, height:150,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
 
                         />
 
                     <TouchableOpacity
                           activeOpacity={0.5}
-                          style={{backgroundColor:'black',width:40,alignSelf:'flex-end',top:-windowHeight/20,borderRadius:200}}
+                          style={{backgroundColor:'black',width:30, height:30, padding:5.5, alignSelf:'flex-end',top:-windowHeight/20,borderRadius:200}}
                           onPress={chooseFile}>
-                               <FeatherIcon name="plus" size={40} color={'white'} />
+                               <FeatherIcon name="plus" size={20} color={'white'} />
                             
                         </TouchableOpacity>
                       </View>
                 
                         <Text style={{fontSize:20,fontWeight:'700',alignSelf:'center', marginBottom:10,marginTop:20}}>{userDetails.providerData[0].displayName}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around',marginTop:5}}>
-                                <Text style={{fontSize:16,fontWeight:'400'}}>Followers : {userCont.followers&&userCont.followers.length!=0?userCont.followers.length:0} </Text>
-                                <Text style={{fontSize:16,fontWeight:'400'}}>Following : {userCont.following&&userCont.following.length!=0?userCont.following.length:0} </Text>
+                                <Text style={{fontSize:16,fontWeight:'600'}}>Followers : {userCont.followers&&userCont.followers.length!=0?userCont.followers.length:0} </Text>
+                                <Text style={{fontSize:16,fontWeight:'600'}}>Following : {userCont.following&&userCont.following.length!=0?userCont.following.length:0} </Text>
                         </View>
                     </View>
                     <View style={{width:'100%',height:1,backgroundColor:"black"}}></View>
