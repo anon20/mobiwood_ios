@@ -64,6 +64,7 @@ const UserContextProvider = ({ children }) => {
   useEffect(() => {
     // alert(`a : ${JSON.stringify(userDetails)}`)
     if (userDetails) {
+      if(userDetails.likedVideos)
       setLikedVideos(userDetails.likedVideos || []);
       setFollowers(userDetails.followers || []);
       setFollowing(userDetails.following || []);
@@ -84,14 +85,20 @@ const UserContextProvider = ({ children }) => {
           // console.log(`resp :${JSON.stringify(resp.data())}`);
           // console.log(`likedVideos : ${userData["likedVideos"]}`)
           // if(resp)
-          userData.following.forEach(data => {
-            tmpFllwingMp.set(data, true);
-          });
-          userData.likedVideos.forEach(data => {
-            likedVidMap.set(data, true);
-          })
-          setFollowing(userData.following);
-          setFollowers(userData.followers);
+          if(userData&&userData.followers&&userData.followers.length)
+          {
+            userData.following.forEach(data => {
+              tmpFllwingMp.set(data, true);
+            });
+          }
+          if(userData&&userData.likedVideos&&userData.likedVideos.length)
+          {
+            userData.likedVideos.forEach(data => {
+              likedVidMap.set(data, true);
+            })
+          }
+          setFollowing(userData&&userData.following&&userData.following.length?userData.following:[]);
+          setFollowers(userData&&userData.followers&&userData.followers.length?userData.followers:[]);
           setLikedVideosMap(likedVidMap);
           setFllwingMap(tmpFllwingMp);
           // console.log(`Following data is set too`)
@@ -127,11 +134,14 @@ const UserContextProvider = ({ children }) => {
   
   const updateLikes = (videoId, noOfLikes) => {
 
-    let newLikes;
+    let newLikes=[];
     // console.log(`videoId :${videoId}`)
     noOfLikes= noOfLikes?noOfLikes:0;
     if (!likedVideosMap.get(videoId)) {
-      newLikes = [...likedVideos, videoId];
+      // console.log(`likedVideos : ${JSON.stringify(likedVideos)}`)
+      if(likedVideos)
+      newLikes = [...likedVideos];
+      newLikes.push(videoId);
       noOfLikes++;
     } else {
       newLikes = likedVideos.filter((vid) => vid !== videoId);
@@ -178,7 +188,9 @@ const UserContextProvider = ({ children }) => {
     let allFollowers = []; 
     //retreiving all the followers of the video uploader
     await firestore().collection("user").doc(uid).get().then(resp => {
-      allFollowers = [...resp.data().followers];
+      console.log(`resp.data : ${JSON.stringify(resp.data())}`);
+      if(resp.data().followers)
+        allFollowers = [...resp.data().followers];
     })
     // console.log(`${action} ${userId}`);
     let returnMesg="followed"
