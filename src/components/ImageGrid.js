@@ -1,30 +1,42 @@
 import React from 'react'
-import {View,Text,Image, FlatList, TouchableOpacity, ToastAndroid, Platform, Alert}from 'react-native'
+import {ImageBackground,View,Text,Image, FlatList, TouchableOpacity, ToastAndroid, Platform, Alert, ScrollView}from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 import firestore from '@react-native-firebase/firestore';
 import Video from 'react-native-video-player';
 import {VideosContext} from '../contexts/VideosContext.js';
+ 
+import Bgimage from '../assets/images/circle.png';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
   } from 'react-native-responsive-screen';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { UserContext } from '../contexts/UserContext';
+import Contestregistration from '../screens/Contests/ContestRegistration.js';
+import CircleTop from './CircleTop.js';
 
-
-let codeBlock = "@abhishekgill";
-export default function ImageGrid(props){
+let codeBlock = "MobiWood User";
+export default function ImageGrid(props, navigation){
     const videoContext = React.useContext(VideosContext);
     const usrCntxt = React.useContext(UserContext);
-
     return(
+      
         <View style={styles.imageGrid}>
+
+
             <FlatList 
               ref={input => (flatListRef = input)}
               data = {videoContext.videos}
               keyExtractor={(item, index) => index.toString()}
               renderItem = {({item, index}) =>  (
+                
                 <View style={styles.imgContainer}> 
+                
+                {index==0 ?
+                <CircleTop />
+                :null
+                }
+                
                   <View style={{paddingTop:5}}>
                     {
                       !item.profile?
@@ -87,5 +99,37 @@ const styles = ScaledSheet.create({
     img:{
         width:wp('100%'),
         borderRadius:"0@ms"
-    }
+    },
+    circles:
+    {
+      borderWidth:0,
+      borderRadius: '31@ms',
+      borderColor:'black',
+      width:75,
+      height:75,
+      paddingTop:30,
+      textAlign:'center',
+      marginRight:10,
+      color:'#353535',
+      fontWeight:'600',
+      fontSize:13
+    },
+    circlewrap:
+    {
+      marginLeft:10
+    },
+    circlewrapper:
+    {
+      marginLeft:10,
+      marginTop:10,
+      display:'flex',
+      flexDirection:'row',
+    },
+    imgbackground: {
+      flex: 1,
+      resizeMode: "cover",
+      justifyContent: "center",
+      width:75,
+      height:75,
+    },
 })

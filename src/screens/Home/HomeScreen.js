@@ -103,6 +103,7 @@ export default HeaderIcon(function HomeScreen(){
       }
     }
     return(
+    
       <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
         <Modal
         animationType="slide"
