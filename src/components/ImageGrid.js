@@ -26,10 +26,15 @@ export default function ImageGrid(props){
               renderItem = {({item, index}) =>  (
                 <View style={styles.imgContainer}> 
                   <View style={{paddingTop:5}}>
-                    <Image source={require('../assets/images/usericon.png')} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:1, borderColor:'#bbb',}} />
+                    {
+                      !item.profile?
+                    <Image source={require('../assets/images/user-placeholder.png')} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:0, borderColor:'#bbb',}} />:
+                    <Image source={{uri:item.profile}} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:1, borderColor:'#bbb',}} />
+                    
+                    }
                     <View style={{}}>
-                      <Text style={{marginTop:8, marginLeft:12, fontWeight:'bold', fontSize:15, position:'absolute', top:-55, left:50}}>{!item.displayName?"Abhishek":item.displayName}</Text>
-                      <Text style={{position:'absolute', top:-27, left:62, fontSize:12, color:'grey'}}>@{item.username}</Text>
+                      <Text style={{marginTop:8, marginLeft:12, fontWeight:'bold', fontSize:15, position:'absolute', top:-45, left:50}}>{!item.displayName?"MobiWood User":item.displayName}</Text>
+                      <Text style={{position:'absolute', top:-27, left:62, fontSize:12, color:'grey', display:'none'}}>@{item.username}</Text>
                       <Text style={{padding:10}}>{item.description}</Text>
                     </View>
                     <TouchableOpacity style={{position:'absolute', right:25, marginTop:20 }} onPress={() => props.reportModal(item.id, item, true)}>

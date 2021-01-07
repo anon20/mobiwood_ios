@@ -38,15 +38,15 @@ export default function DrawerContent(props){
                icon={({ color, size }) => (<Icon name="home-outline" color={'white'} size={25} /> )}
                labelStyle={[styles.labelStyle],{marginLeft:-20, color:'white', fontSize:22,}}
                style={[styles.drawerItemStyle],{marginRight:-10}}
-               onPress={() => {props.navigation.navigate('Construction')}}
+               onPress={() => {props.navigation.navigate('Home')}}
 			   
             />
             <DrawerItem 
-               label="Trending"
+               label="Profile"
                icon={({ color, size }) => (<Icon name="home-outline" color={'white'} size={25} /> )}
                labelStyle={[styles.labelStyle],{marginLeft:-20, color:'white', fontSize:22,}}
                style={[styles.drawerItemStyle],{marginRight:-10}}
-               onPress={() => {props.navigation.navigate('Construction')}}
+               onPress={() => {props.navigation.navigate('Profile')}}
             /> */}
              <DrawerItem 
                label="Contests"
@@ -61,14 +61,14 @@ export default function DrawerContent(props){
                icon={({ color, size }) => (<Icon name="help-circle-outline" color={'white'} size={25} /> )}
                labelStyle={[styles.labelStyle],{marginLeft:-20, color:'white', fontSize:18,}}
                style={[styles.drawerItemStyle],{marginRight:-10}}
-               onPress={() => {props.navigation.navigate('Construction')}}
+               onPress={() => {props.navigation.navigate('support')}}
             />
              <DrawerItem 
                label="Feedback"
                icon={({ color, size }) => (<Icon name="happy-outline" color={'white'} size={25} /> )}
                labelStyle={[styles.labelStyle],{marginLeft:-20, color:'white', fontSize:18,}}
                style={[styles.drawerItemStyle],{marginRight:-10}}
-               onPress={() => {props.navigation.navigate('Construction')}}
+               onPress={() => {props.navigation.navigate('feedback')}}
             />
              
 			<DrawerItem 
@@ -92,17 +92,15 @@ const styles = ScaledSheet.create({
     logoContainer:{
         flexDirection:"row",
         justifyContent:"space-around",
-        paddingBottom:"10@ms",
-        marginTop:-50
+        paddingBottom:"10@ms"
     },
     logo:{
         width:wp('40%'),
-        height:hp('5%'),
+        height:hp('10%'),
         resizeMode: 'contain',
-        marginBottom:10
     },
     icon:{
-        paddingTop:"15@ms",
+        paddingTop:"25@ms",
     },
     labelStyle:{
         color:"white",

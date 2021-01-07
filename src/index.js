@@ -95,7 +95,7 @@ const App = () => {
             <Tab.Screen name="Search" component={!isSignedIn?UnauthorizedStack:ExploreScreen} />
             <Tab.Screen name="Upload" component={!isSignedIn?UnauthorizedStack:UploadScreen} />
             <Tab.Screen name="Notification" component={!isSignedIn?UnauthorizedStack:SettingsScreen} />
-            <Tab.Screen name="Profile" component={!isSignedIn?UnauthorizedStack:DrawerStack} />
+            <Tab.Screen options={{"unmountOnBlur":true}} name="Profile" component={!isSignedIn?UnauthorizedStack:DrawerStack} />
             
           </Tab.Navigator>
           :

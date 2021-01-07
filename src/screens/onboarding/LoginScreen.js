@@ -235,7 +235,7 @@ const LoginScreen = ({navigation}) => {
                     style={styles.btn}
                     onPress={() => navigation.navigate('Signup')}>
 
-              <Text style={{color:'white', fontSize:22, fontWeight:'bold', paddingTop:10}}>
+              <Text style={{color:'white', fontSize:22, fontWeight:'bold', paddingTop:3}}>
               Create an account
               </Text> 
               </TouchableOpacity>

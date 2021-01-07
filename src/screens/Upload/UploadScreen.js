@@ -9,6 +9,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import {AuthContext} from '../../contexts/AuthContext.js';
+import {UserContext} from '../../contexts/UserContext.js';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import FeatherIcon from 'react-native-vector-icons/Feather';
@@ -18,6 +19,7 @@ const windowHeight = Dimensions.get('window').height;
 const UploadScreen = (props) => {
     const [filePath, setFilePath] = useState({});
     const athCntxt = React.useContext(AuthContext);
+    const usrCntxt = React.useContext(UserContext);
     const [talent,setTalent] = useState('Acting');
     const [title, setTitle] = useState('');
     const [socialMedia,setSocialMedia] = useState("")
@@ -139,6 +141,7 @@ const UploadScreen = (props) => {
                 description: desc,
                 title: title,
                 userId: athCntxt.uid,
+                profile: usrCntxt.profilePhoto,
                 displayName: athCntxt.userDetails.displayName,
                 userName : athCntxt.userDetails.username,
                 socialMedia: socialMedia,
@@ -279,12 +282,12 @@ const UploadScreen = (props) => {
               <Checkbox
                 value={isSelected}
                 onValueChange={setSelection}
-                checkboxSize={30}
-                CheckboxIconSize={30}     
-                style={[styles.checkbox],{marginTop:5}}
+                checkboxSize={20}
+                CheckboxIconSize={20}     
+                style={[styles.checkbox],{marginTop:0}}
                 // lineWidth={10}
               />
-              <Text style={{marginTop:5}}>Are you participating as a group?</Text>
+              <Text style={{marginTop:5, marginRight:10}}> Are you participating as a group?</Text>
       </View>
             <View style={{justifyContent:'space-around'}}>
             
