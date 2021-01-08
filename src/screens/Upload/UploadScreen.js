@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 import {View,StyleSheet,Text,TouchableOpacity,Image, SafeAreaView, Dimensions,ScrollView,ToastAndroid,ActivityIndicator, Platform, Alert} from 'react-native';
 //import HeaderIcon from '../../HOC/HeaderIcon.js';
 import Video from 'react-native-video';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker, {launchImageLibrary} from 'react-native-image-picker';
 import InputField from '../../components/InputField';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Checkbox from '@react-native-community/checkbox';
@@ -39,7 +39,7 @@ const UploadScreen = (props) => {
             },
             
         };
-        ImagePicker.showImagePicker(options, (response) => {
+        ImagePicker.launchImageLibrary(options, (response) => {
           console.log('Response = ', response);
     
           if (response.didCancel) {

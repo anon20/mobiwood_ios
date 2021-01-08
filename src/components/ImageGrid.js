@@ -1,6 +1,7 @@
 import React from 'react'
 import {View,Text,Image, FlatList, TouchableOpacity, ToastAndroid, Platform, Alert}from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
+import ImageGridItem from './ImageGridItem.js';
 import firestore from '@react-native-firebase/firestore';
 import Video from 'react-native-video-player';
 import {VideosContext} from '../contexts/VideosContext.js';
@@ -14,12 +15,24 @@ import { UserContext } from '../contexts/UserContext';
 
 let codeBlock = "@abhishekgill";
 export default function ImageGrid(props){
+    let flatListRef = null;
+    const [currentVisibleVideo, setCurrentVisibleVideo] = React.useState(0);
+    const [currentlyPlaying, setCurrentlyPlaying] = React.useState(null);
+    const viewConfigRef = React.useRef({viewAreaCoveragePercentThreshold: 70});
     const videoContext = React.useContext(VideosContext);
     const usrCntxt = React.useContext(UserContext);
-
+    const onViewRef = React.useRef(viewableItems => viewableItems.viewableItems.length
+      ? setCurrentVisibleVideo(viewableItems.viewableItems[0].index)
+      : null
+    );
+    React.useEffect(()=>{
+      console.log(`currentVisibleVideo : ${currentVisibleVideo}`);
+    },[currentVisibleVideo])
     return(
         <View style={styles.imageGrid}>
             <FlatList 
+              onViewableItemsChanged={onViewRef.current}
+              viewabilityConfig={viewConfigRef.current}
               ref={input => (flatListRef = input)}
               data = {videoContext.videos}
               keyExtractor={(item, index) => index.toString()}
@@ -44,7 +57,7 @@ export default function ImageGrid(props){
                       />
                     </TouchableOpacity>
                   </View>
-                  <Video thumbnail={{uri:item.thumbnail}} video={{uri:item.videoUrl}} style={styles.img}/>
+                  <ImageGridItem item={item} myIndex={index} setPlaying={setCurrentlyPlaying} currentlyPlaying={currentlyPlaying} />
                   <View style={{paddingLeft:20, marginTop:12, marginBottom:20, display:'flex', flexDirection:'row'}}>
                     <TouchableOpacity onPress={()=>{
                       usrCntxt.updateLikes(item.id, videoContext.vidLikesMap.get(item.id)).then(reslt => {

@@ -42,7 +42,7 @@ export default props => {
       },
       quality:0.5
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       // console.log('Response = ', response);
 
       if (response.didCancel) {
