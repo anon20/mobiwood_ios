@@ -38,7 +38,7 @@ export default ScaledSheet.create({
         paddingBottom:"5@ms"
       },
     btn:{
-        width:wp('30%'),
+        width: Platform.OS==="ios"?wp('30%'):wp('30%'),
         padding:"10@ms",
         backgroundColor:"black",
         borderRadius:"7@ms",

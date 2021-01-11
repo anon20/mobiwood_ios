@@ -49,15 +49,14 @@ export default props => {
               setVidObj({});
             }}
           >
-            <View style={{justifyContent:'center',flex:1}}>
+            <SafeAreaView style={{justifyContent:'center',flex:1}}>
                 <View style={styles.centeredView}>
-                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', position:'absolute', zIndex:10, top:15, right:15, alignSelf:'flex-end', borderRadius:3}}>
-                  
+                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', position:'absolute', zIndex:10, top: Platform.os==="ios"? 45:-25, right:15, alignSelf:'flex-end', borderRadius:3}}>
                     <FeatherIcon  name='x' size={30} color='grey' />
-                </TouchableOpacity>
-                <VideoPlayer
+                  </TouchableOpacity>
+                  <VideoPlayer
                     video={{uri:vidObj.videoUrl}}
-                    style={{height:windowHeight/1.26, width:windowWidth}}
+                    style={{height: Platform.os==="ios"? windowHeight/1.26 : windowHeight/1.16, marginTop:"-15%", width:windowWidth}}
                     thumbnail={{uri: vidObj.thumbnail}}
                     onPlayPress={()=>{
                       firestore().collection("contest").doc(vidObj.id).update({
@@ -74,42 +73,28 @@ export default props => {
                       })
                     }}
                   />
-                {/* <TouchableHighlight
-                  style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                  onPress={() => {
-                    setModalVisible(!modalVisible);
-                  }}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </TouchableHighlight>
-               */}
-               
-            </View>
-            <View style={{flexDirection:'row', paddingTop:15, paddingBottom:15, paddingLeft:20, backgroundColor:'rgb(0,0,0)', position:'absolute', width:'100%', bottom:75}}>
+                </View>
+                <View style={styles.shareBtns}>
                   <View style={{alignSelf:'flex-start', flexDirection:'row'}}>
                     <TouchableOpacity onPress={()=>{
                       usrCntxt.updateLikes(vidObj.id, vidCntxt.vidLikesMap.get(vidObj.id)).then(reslt => {
-                        // console.log(`vidLiked : ${reslt}`)
                         if(Platform.OS === "android")
                           if(reslt>vidCntxt.vidLikesMap.get(vidObj.id))
                             ToastAndroid.show(`You Liked This Video`, ToastAndroid.LONG)
-                          // else
-                          //   ToastAndroid.show(`Like Cleared!`, ToastAndroid.LONG);
                         let tmp = new Map(vidCntxt.vidLikesMap);
                         tmp.set(vidObj.id, reslt);
                         vidCntxt.setVidLikesMap(tmp);
                       })
                       
                     }}>
-                      <Text style={{color:'white', fontSize:20, marginTop:3, marginRight:8}}> <FeatherIcon name='thumbs-up' size={25} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'white':'red'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
+                      <Text style={{color:'white', fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon name='thumbs-up' size={22} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'white':'#3b5998'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{usrCntxt.handleShare(vidObj.id, vidObj.description)}}>
-                      <Text style={{color:'white',fontSize:20, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={25} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
+                      <Text style={{color:'white',fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={22} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
-                      <Text style={{fontSize:20, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={25} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
+                      <Text style={{fontSize:18, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={22} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
                   </View>
-                  <View style={{top:8, position:'absolute', right:115, marginTop:6}}>
-                    <TouchableOpacity onPress={()=>{
+                    <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', }]} onPress={()=>{
                       setFollowProcessing(true);
                       usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidObj.userid)?"unfollow":"follow", vidObj.userid).then(resp=>{
                         if(resp === "followed"||resp === "unfollowed")
@@ -133,14 +118,14 @@ export default props => {
                         }
                       })
                     }}>
-                      <Text style={{backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', color:'white', paddingHorizontal:10, paddingVertical:5, borderRadius:10,fontSize:18, fontWeight:'600', position:'absolute'}}>{followProcessing?
-                      <ActivityIndicator animating={followProcessing} color="white" />
-                      :
-                      usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}</Text>
+                      <Text style={[styles.followBtn]}>
+                        {followProcessing?<ActivityIndicator size="small" color="white" />
+                        :
+                        usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}
+                      </Text>
                     </TouchableOpacity>
-                  </View>
                 </View>
-                </View>
+              </SafeAreaView>
           </Modal>
   
           <View style={styles.searchContainer}>
@@ -150,7 +135,7 @@ export default props => {
                   placeholder="Search"
                   placeholderTextColor = "#1a202c"
                   keyboardType={"ascii-capable"}
-                  style={{padding:15}}
+                  style={{padding:Platform.OS === 'android'?10:15}}
                   onChangeText={inpt => {console.log(`inpt : ${inpt}`); setSearchKeyword(inpt)}}
                 />
               </View>
@@ -177,6 +162,28 @@ const styles  = StyleSheet.create ({
         marginLeft:10,
         // backgroundColor:'black'
     },
+    shareBtns:{
+      flexDirection:'row', 
+      paddingTop:15, 
+      paddingBottom:15, 
+      paddingLeft:20, 
+      backgroundColor:'rgb(0,0,0)', 
+      position:'absolute', width:'100%', 
+      bottom:Platform.OS==="ios"?75:48
+    },
+    followBtnContainer:{
+      position:'absolute',
+      paddingHorizontal:10,
+      right:20,
+      top:10,
+      borderRadius:6,
+      paddingVertical:5, 
+    },
+    followBtn:{
+      color:'white', 
+      fontSize:18, 
+      fontWeight:'600', 
+    },
     icon:{
         justifyContent:'center'
     },
@@ -185,7 +192,7 @@ const styles  = StyleSheet.create ({
       width:windowWidth,
       // justifyContent:'center',
       position:'absolute',
-      top:50,
+      // top:Platform.OS==="android"?50:undefined,
       // alignItems: "center",
       backgroundColor: "white",
       // padding: 35,

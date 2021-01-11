@@ -8,12 +8,22 @@ import {
 export default props => {
     let vidRef = null;
     React.useEffect(()=>{
+        // console.log(`from useEffect, currentlyPlaying : ${props.currentlyPlaying}`)
         if(props.myIndex!=props.currentlyPlaying)
             vidRef.pause();
     },[props.currentlyPlaying]);
+    React.useEffect(() => {
+        if(props.myIndex != props.currentVisibleVideo)
+        {
+            vidRef.pause();
+        }
+        else{
+            vidRef.resume();
+        }
+    },[props.currentVisibleVideo]);
     return (
-        <Video ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}} style={styles.img}/>
-    )
+            <Video ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}}  resizeMode={"cover"}  style={styles.img} autoplay={props.myIndex==props.currentVisibleVideo?true:false}/>
+        )
 }
 const styles = ScaledSheet.create({
     imageGrid:{
@@ -27,6 +37,6 @@ const styles = ScaledSheet.create({
     },
     img:{
         width:wp('100%'),
-        borderRadius:"0@ms"
+        borderRadius:"0@ms",
     }
 })

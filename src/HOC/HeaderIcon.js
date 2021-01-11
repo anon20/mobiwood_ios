@@ -11,7 +11,7 @@ export default InnerComp => {
                 <Image source={image} style={[styles.headerTitleStyle],{width:142, height:41}} />
             </View>
             <View  style={{flex:1}} >
-                <InnerComp/>
+                <InnerComp navigation={props.navigation} />
             </View>
         </SafeAreaView>
         )

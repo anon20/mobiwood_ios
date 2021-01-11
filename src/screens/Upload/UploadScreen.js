@@ -122,7 +122,7 @@ const UploadScreen = (props) => {
         let uploadTask = storage()
           .ref()
           .child("users/" + vid)
-          .putFile(filePath.path, metadata);
+          .putFile(filePath.uri, metadata);
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -185,7 +185,9 @@ const UploadScreen = (props) => {
 
     return(
       <SafeAreaView style={{flex:1}}>
-        <ScrollView style={{flex:1}}>
+        <ScrollView style={{flex:1}}
+          showsVerticalScrollIndicator={false}
+        >
           {!isUploading?<View>
               <View style={styles.uploadView}>
             <Text style={{textAlign:'center',fontSize:24,padding:20, display:'none'}}>Upload A Video</Text>
@@ -222,7 +224,7 @@ const UploadScreen = (props) => {
 
             <Text style={[styles.label], {marginLeft:0, marginBottom:10}}>Talent</Text>
             
-              <View style={{height:50}}>
+              <View style={{height:50, zIndex:2}}>
                 <DropDownPicker
                     items={[
                       {value: 'Acting', label: 'Acting'},
@@ -364,7 +366,7 @@ const styles  = StyleSheet.create ({
     checkbox: {
       alignSelf: "center",
       marginTop:Platform.OS==="ios"?25:20,
-      height:Platform.OS==="ios"?20:30,
+      height:Platform.OS==="ios"?10:30,
     },
     label: {
       margin: 8,

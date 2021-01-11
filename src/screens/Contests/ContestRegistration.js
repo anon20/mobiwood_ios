@@ -112,7 +112,7 @@ export default function Contestregistration({navigation}) {
       <View style={styles.formContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.heading}>Register for Contest</Text>
-
+ 
           <VideoPlayer
             video={video}
             thumbnail={{uri: 'https://i.picsum.photos/id/866/1600/900.jpg'}}
@@ -359,11 +359,15 @@ export default function Contestregistration({navigation}) {
                 </Modal>
 
                 <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
+                {isLoading ? (
                   <Text style={styles.btnText}>
-                  Next <ActivityIndicator animating={isLoading} color="white" style={{position:'absolute', marginTop:25,  width:200, }} />
-                  
-                </Text>
-                 
+                  Next 
+                 </Text>
+                ) :
+                 ( <Text style={styles.btnText}>
+                  <ActivityIndicator animating={isLoading} color="white" style={{position:'absolute', marginTop:25,  width:200, }} />
+                 </Text>
+                )}
                 </TouchableOpacity>
               </>
             )}

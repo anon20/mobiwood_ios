@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,Image,View, SafeAreaView} from 'react-native';
+import {Text, Image, View, SafeAreaView, Platform} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/Home/HomeScreen';
 const Stack = createStackNavigator();
@@ -98,10 +98,10 @@ function ProfileStack() {
         headerTitleStyle: {
           fontWeight: 'bold',
           alignSelf:'center',
-          height:50,
-      },
+          height : Platform.OS==="android"?70:50,
+        },
         headerStyle: {
-        backgroundColor: 'white',
+          backgroundColor: 'white',
         },
         headerRight: () => (
           <TouchableOpacity style={[styles.btn],{display:'none'}} onPress={() => logout()}>
@@ -159,14 +159,18 @@ function HomeStack() {
   );
 }
 
-function ContestStack() {
+export function ContestStack() {
   return (
     <Stack.Navigator
       headerMode="screen"
       screenOptions={({navigation}) => ({
         //header for the contest screen
         headerTitle: (<Image source={image} style={{width:142, height:41}} />),
-        
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignSelf:'center',
+          height : Platform.OS==="android"?70:50,
+        },
         headerStyle: {
           backgroundColor: 'white',
         },
@@ -201,9 +205,12 @@ function SupportStack() {
       screenOptions={({navigation}) => ({
         // title: '',
         headerTitle: (<Image source={image} style={{width:142, height:41}} />),
-
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignSelf:'center',
+          height : Platform.OS==="android"?70:50,
+        },
         headerStyle: {
-          //color for support header
           backgroundColor: 'white',
         },
         // headerRight: () => (
@@ -236,7 +243,7 @@ function FeedbackStack() {
         headerTitleStyle: {
           fontWeight: 'bold',
           alignSelf:'center',
-          height:50,
+          height : Platform.OS==="android"?70:50,
       },
         headerStyle: {
           backgroundColor: 'white',

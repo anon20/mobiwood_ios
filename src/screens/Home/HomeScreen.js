@@ -10,6 +10,7 @@ import {
 import {Colors, Typography} from '../../constants';
 import ImageGrid from '../../components/ImageGrid'
 import RadioButtonRN from 'radio-buttons-react-native';
+import { useLinkProps } from '@react-navigation/native';
  
 
 const windowWidth = Dimensions.get('window').width;
@@ -52,7 +53,8 @@ const data = [
   ];
 
 
-export default HeaderIcon(function HomeScreen(){
+const HomeScreen = props => {
+  // console.log(`navigation inside HomeScreen.js : ${JSON.stringify(props.navigation)}`)
     const [modalVisible,setModalVisible] = useState(false)
     const [reportValue,setReportValue] = useState("");
     const [vidId, setVidId] = useState('');
@@ -132,11 +134,12 @@ export default HeaderIcon(function HomeScreen(){
         </View>
       </Modal>
         <View style={styles.releaseCont}>
-          <ImageGrid reportModal = {toggleModal} />
+          <ImageGrid navigation={props.navigation} reportModal = {toggleModal} />
         </View>
       </SafeAreaView>
     )
-})
+};
+export default HeaderIcon(HomeScreen);
 
 const styles = ScaledSheet.create({
     container:{

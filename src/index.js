@@ -3,6 +3,8 @@ import HomeScreen from './screens/Home/HomeScreen'
 import UploadScreen from './screens/Upload/UploadScreen.js';
 import ExploreScreen from './screens/Explore/Explore.js';
 import React from 'react';
+import {ContestStack} from './navigations/DrawerStack.js';
+
 import { Text, View, Platform } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
@@ -10,8 +12,10 @@ import VideosContext from './contexts/VideosContext.js';
 import AuthContext from './contexts/AuthContext.js';
 import UserContext from './contexts/UserContext.js';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useLinkProps } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import ContestRegistration from './screens/Contests/ContestRegistration';
+import UnderConstruction from './screens/UnderConstruction/UnderConstruction.js';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {UnauthorizedStack} from './navigations/UnauthorizedStack';
@@ -34,22 +38,10 @@ const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-const App = () => {
-  const [isSignedIn, setIsSignedIn] = React.useState(false);
-  const onAuthStateChanged = (u) => {
-    setIsSignedIn(u && u.uid);
-  };
-
-  React.useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
+const TabNavigator = props => {
+  // console.log(`props.navigation inside TabNavigator: ${JSON.stringify(props.navigation)}`)
   return (
-    <AuthContext>
-      <UserContext>
-        <VideosContext>
-          <NavigationContainer>
-          {isSignedIn?<Tab.Navigator 
+    <Tab.Navigator 
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
@@ -72,7 +64,14 @@ const App = () => {
                 iconName = focused ? 'search' : 'search';
               }
               // You can return any component that you like here!
-              return <FeatherIcon name={iconName} size={25} color={color} style={{marginBottom:0}} />;
+              if(Platform.OS==='ios'){
+              return <FeatherIcon name={iconName} size={25} color={color} style={{marginBottom:0}} />
+              } 
+              if(Platform.OS==='android'){
+                return <FeatherIcon name={iconName} size={22} color={color} style={{marginBottom:18}} />
+                } 
+
+              ;
             },
           })}
           tabBarOptions={{
@@ -91,19 +90,38 @@ const App = () => {
             }
           }}
           >
-            <Tab.Screen name="Home" component={!isSignedIn?UnauthorizedStack:HomeScreen} />
-            <Tab.Screen name="Search" component={!isSignedIn?UnauthorizedStack:ExploreScreen} />
-            <Tab.Screen name="Upload" component={!isSignedIn?UnauthorizedStack:UploadScreen} />
-            <Tab.Screen name="Notification" component={!isSignedIn?UnauthorizedStack:SettingsScreen} />
-            <Tab.Screen options={{"unmountOnBlur":true}} name="Profile" component={!isSignedIn?UnauthorizedStack:DrawerStack} />
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Search" component={ExploreScreen} />
+            <Tab.Screen name="Upload" component={UploadScreen} />
+            <Tab.Screen name="Notification" component={SettingsScreen} />
+            <Tab.Screen options={{"unmountOnBlur":true}} name="Profile" component={DrawerStack} />
             
           </Tab.Navigator>
-          :
-          <Stack.Navigator>
-          <Stack.Screen name="Login" options={{headerShown:false}} component={UnauthorizedStack} />
+  )
+}
 
-          </Stack.Navigator>
-          }
+const App = () => {
+  const [isSignedIn, setIsSignedIn] = React.useState(false);
+  const onAuthStateChanged = (u) => {
+    setIsSignedIn(u && u.uid);
+  };
+
+  React.useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+  return (
+    <AuthContext>
+      <UserContext>
+        <VideosContext>
+          <NavigationContainer>
+            <Stack.Navigator>
+              {isSignedIn?
+              <Stack.Screen name="TabNavigator" options={{headerShown:false}} component={TabNavigator} />:
+              <Stack.Screen name="Login" options={{headerShown:false}} component={UnauthorizedStack} />}
+              <Stack.Screen name="contestScreen" options={{headerShown:false}} component={ContestRegistration} />
+              <Stack.Screen name="underConstruction" options={{headerShown:false}} component={UnderConstruction} />
+            </Stack.Navigator>
           </NavigationContainer>
         </VideosContext>
       </UserContext>
