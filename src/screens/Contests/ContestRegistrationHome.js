@@ -118,14 +118,14 @@ export default function Contestregistration({navigation}) {
         <ScrollView showsVerticalScrollIndicator={false}>
           
           <View style={{flexDirection:'row', display:'flex'}}>
-            {/* <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginRight:10}}>
+            <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginRight:10}}>
               <IconClose
                 name="chevron-back-outline"
                 size={28}
                 color="black"
                 backgroundColor="white"
               />
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             <Text style={styles.heading}> Register for Contest</Text>
           </View>
           

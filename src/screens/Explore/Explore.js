@@ -110,10 +110,10 @@ export default props => {
                           }
                           else
                           {
-                            if(resp === "followed")
-                              Alert.alert("Following")
-                            else
-                              Alert.alert("Unffolowed")
+                            // if(resp === "followed")
+                            //   Alert.alert("Following")
+                            // else
+                            //   Alert.alert("Unffolowed")
                           }
                         }
                       })
@@ -177,7 +177,7 @@ const styles  = StyleSheet.create ({
       // marginTop:15,
       bottom:10,
       position:'absolute',
-      // paddingBottom:15, 
+      paddingBottom:15, 
       paddingLeft:20, 
       // backgroundColor:'rgb(0,0,0)', 
       // position:'absolute', width:'100%', 

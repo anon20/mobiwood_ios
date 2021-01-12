@@ -131,7 +131,6 @@ export default props => {
                         <Image
                             source={{uri: userCont.profilePhoto?userCont.profilePhoto:filePath.uri}}
                             style={{width:150, height:150,alignSelf:'center',borderRadius:1000,resizeMode:'cover',borderWidth:1}}
-
                         />
 
                     <TouchableOpacity

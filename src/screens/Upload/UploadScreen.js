@@ -86,11 +86,20 @@ const UploadScreen = (props) => {
 
     const validations = () => {
        if(desc== "" || follower==""||socialMedia=="") {
-        ToastAndroid.show("Fill all the details before Uploading", ToastAndroid.LONG);
+         if(Platform.OS==="android")
+            ToastAndroid.show("Fill all the details before Uploading", ToastAndroid.LONG);
+          else 
+            Alert.alert(`Fill all the details before uploading`)
         return false;
       }
-      if(!filePath.uri||!filePath.path)
-        ToastAndroid.show(`Add a Video First!`, ToastAndroid.LONG);
+      if(!filePath.uri&&!filePath.path)
+      {
+        if(Platform.OS==="android")
+          ToastAndroid.show(`Add a Video First!`, ToastAndroid.LONG);
+        else
+          Alert.alert(`No Video Added!`);
+
+      }
       else {
         return true;
       }
@@ -117,7 +126,7 @@ const UploadScreen = (props) => {
         let metadata = {
           contentType: "video/quicktime",
         };
-        // alert(`filePath : ${filePath}`)
+        alert(`filePath : ${filePath.uri}`)
         setIsUploading(true);
         let uploadTask = storage()
           .ref()

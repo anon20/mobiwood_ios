@@ -15,6 +15,7 @@ import UserContext from './contexts/UserContext.js';
 import { NavigationContainer, useLinkProps } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ContestRegistration from './screens/Contests/ContestRegistration';
+import ContestRegistrationHome from './screens/Contests/ContestRegistrationHome';
 import UnderConstruction from './screens/UnderConstruction/UnderConstruction.js';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -120,6 +121,8 @@ const App = () => {
               <Stack.Screen name="TabNavigator" options={{headerShown:false}} component={TabNavigator} />:
               <Stack.Screen name="Login" options={{headerShown:false}} component={UnauthorizedStack} />}
               <Stack.Screen name="contestScreen" options={{headerShown:false}} component={ContestRegistration} />
+              <Stack.Screen name="contestScreenHome" options={{headerShown:false}} component={ContestRegistrationHome} />
+
               <Stack.Screen name="underConstruction" options={{headerShown:false}} component={UnderConstruction} />
             </Stack.Navigator>
           </NavigationContainer>

@@ -14,7 +14,7 @@ export default function Circles(props){
   return (
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.circlewrapper}>
-          <TouchableOpacity onPress={()=>{props.navigation.navigate("contestScreen")}} style={styles.circlewrap}>
+          <TouchableOpacity onPress={()=>{props.navigation.navigate("contestScreenHome")}} style={styles.circlewrap}>
             <ImageBackground source={ContestsImage} style={styles.imgbackground}>
             </ImageBackground> 
           </TouchableOpacity>
