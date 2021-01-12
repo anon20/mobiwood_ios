@@ -39,12 +39,6 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Mobiwood Needs Media Storage Permission</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Mobiwood Needs Camera Permission</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Mobiwood Needs Microphone Permission</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Mobiwood Needs Photo Storage Permission</string>
 	<key>NSPhotoLibraryUsageDescription</key>

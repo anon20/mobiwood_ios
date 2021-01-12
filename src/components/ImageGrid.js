@@ -42,6 +42,8 @@ export default function ImageGrid(props){
                 :null
                 }
                   <View style={{paddingTop:5}}>
+                  {/* {console.log(`item.profile : ${item.profile}`)} */}
+
                     {
                       !item.profile?
                     <Image source={require('../assets/images/user-placeholder.png')} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:0, borderColor:'#bbb',}} />:

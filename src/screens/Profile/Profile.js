@@ -58,7 +58,7 @@ export default props => {
         let uploadTask = storage()
         .ref()
         .child("profile/" + imgName)
-        .putFile(Platform.OS==="ios"?source.path:source.uri, metadata);
+        .putFile(Platform.OS==="ios"?source.uri.substr(7):source.uri, metadata);
         setFilePath(source);
         uploadTask.on(
           "state_changed",
