@@ -22,7 +22,7 @@ export default props => {
         }
     },[props.currentVisibleVideo]);
     return (
-            <Video ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}}  resizeMode={"cover"}  style={styles.img} autoplay={props.myIndex==props.currentVisibleVideo?true:false}/>
+            <Video resizeMode={"cover"} fullScreenOnLongPress={true} pauseOnPress={true} defaultMuted={true} ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}}  resizeMode={"cover"}  style={styles.img} autoplay={true}/>
         )
 }
 const styles = ScaledSheet.create({
