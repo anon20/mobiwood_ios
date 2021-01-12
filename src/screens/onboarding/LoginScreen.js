@@ -21,7 +21,7 @@ import TNC from '../../components/TNC';
 import IconClose from 'react-native-vector-icons/Ionicons';
 
 const loginValidationSchema = yup.object().shape({
-  username: yup.string().required('Username is Required'),
+  username: yup.string().required('Username is required'),
   password: yup.string().required('Password is required'),
 });
 
@@ -179,7 +179,7 @@ const LoginScreen = ({navigation}) => {
                     disabled={!isValid}>
 
                     {isLoading ? (
-                      <ActivityIndicator animating={isLoading} color="white" style={{position:'absolute', marginTop:25,  width:200, }} />
+                      <ActivityIndicator animating={isLoading} color="white" style={{position:'absolute', marginTop:18,  width:200, }} />
                  
                     ) : (
                       <Text style={[styles.btnText, {fontSize:22, flex: 1, justifyContent: "center", alignItems: "center", display:'flex', alignItems:'center', justifyContent:'center'}]}>Log In </Text>

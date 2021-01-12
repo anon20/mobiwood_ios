@@ -55,11 +55,11 @@ export default ScaledSheet.create({
       paddingBottom:"8@ms"
     },
     btn:{
-      padding:"18@ms",
+      paddingVertical:13,
       backgroundColor:"black",
       borderRadius:"7@ms",
       alignItems:"center",
-      height:70
+      height:55
     },
     btnText:{
       

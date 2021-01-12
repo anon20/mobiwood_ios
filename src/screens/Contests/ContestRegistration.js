@@ -23,6 +23,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import UUIDGenerator from 'react-native-uuid-generator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconClose from 'react-native-vector-icons/Ionicons';
 
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 const pinRegExp = /^[1-9][0-9]{5}$/;
@@ -111,7 +112,17 @@ export default function Contestregistration({navigation}) {
     <KeyboardAvoidingView>
       <View style={styles.formContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.heading}>Register for Contest</Text>
+          
+          <Text style={styles.heading}> 
+          <TouchableOpacity style={{marginRight:10, paddingTop:10}}>
+          <IconClose
+                  name="chevron-back-outline"
+                  size={38}
+                  color="black"
+                  backgroundColor="white"
+                />
+                </TouchableOpacity>
+                 Register for Contest</Text>
  
           <VideoPlayer
             video={video}
