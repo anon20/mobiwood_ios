@@ -90,7 +90,7 @@ const TabNavigator = props => {
             }
           }}
           >
-            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen options={{"unmountOnBlur":true}} name="Home" component={HomeScreen} />
             <Tab.Screen name="Search" component={ExploreScreen} />
             <Tab.Screen name="Upload" component={UploadScreen} />
             <Tab.Screen name="Notification" component={SettingsScreen} />

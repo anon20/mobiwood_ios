@@ -5,6 +5,7 @@ import {
   ScrollView,
   Modal,
   KeyboardAvoidingView,
+  SafeAreaView,
   ActivityIndicator,
   TouchableOpacity
 } from 'react-native';
@@ -13,6 +14,8 @@ import VideoPlayer from 'react-native-video-player';
 import video from '../../assets/videos/video.mp4';
 import InputField from '../../components/InputField';
 import {Formik} from 'formik';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+
 import * as yup from 'yup';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -24,6 +27,7 @@ import auth from '@react-native-firebase/auth';
 import UUIDGenerator from 'react-native-uuid-generator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconClose from 'react-native-vector-icons/Ionicons';
+import { useLinkProps } from '@react-navigation/native';
 
 const phoneRegExp = /^(\+\d{1,3}[- ]?)?\d{10}$/;
 const pinRegExp = /^[1-9][0-9]{5}$/;
@@ -109,8 +113,8 @@ export default function Contestregistration({navigation}) {
   };
 
   return (
-    <KeyboardAvoidingView>
-      <View style={styles.formContainer}>
+    <SafeAreaView style={{flex:1}}>
+      <KeyboardAvoidingView style={[styles.formContainer, {flex:1}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           
           <Text style={styles.heading}> 
@@ -384,7 +388,7 @@ export default function Contestregistration({navigation}) {
             )}
           </Formik>
         </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }

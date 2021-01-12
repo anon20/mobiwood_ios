@@ -41,22 +41,23 @@ export default props => {
         <SafeAreaView style={{flex:1}}>
           <Modal
             animationType="fade"
-            transparent={true}
-            // style={{}}
+            transparent={false}
+            style={{backgroundColor:'black'}}
+            // backgroundColor={"black"}
             visible={modalVisible}
             onRequestClose={() => {
               setModalVisible(false)
               setVidObj({});
             }}
           >
-            <SafeAreaView style={{justifyContent:'center',flex:1}}>
+            <View style={{justifyContent:'center',flex:1, backgroundColor:'black'}}>
                 <View style={styles.centeredView}>
-                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', position:'absolute', zIndex:10, top: Platform.os==="ios"? 45:-25, right:15, alignSelf:'flex-end', borderRadius:3}}>
+                  <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={styles.closeBtn}>
                     <FeatherIcon  name='x' size={30} color='grey' />
                   </TouchableOpacity>
                   <VideoPlayer
                     video={{uri:vidObj.videoUrl}}
-                    style={{height: Platform.os==="ios"? windowHeight/1.26 : windowHeight/1.16, marginTop:"-15%", width:windowWidth}}
+                    style={{height: Platform.os==="ios"? windowHeight : windowHeight/1.16, width:windowWidth}}
                     thumbnail={{uri: vidObj.thumbnail}}
                     onPlayPress={()=>{
                       firestore().collection("contest").doc(vidObj.id).update({
@@ -75,7 +76,7 @@ export default props => {
                   />
                 </View>
                 <View style={styles.shareBtns}>
-                  <View style={{alignSelf:'flex-start', flexDirection:'row'}}>
+                  <View style={{width:'99%', flexDirection:'row'}}>
                     <TouchableOpacity onPress={()=>{
                       usrCntxt.updateLikes(vidObj.id, vidCntxt.vidLikesMap.get(vidObj.id)).then(reslt => {
                         if(Platform.OS === "android")
@@ -93,7 +94,6 @@ export default props => {
                       <Text style={{color:'white',fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={22} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
                       <Text style={{fontSize:18, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={22} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
-                  </View>
                     <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', }]} onPress={()=>{
                       setFollowProcessing(true);
                       usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidObj.userid)?"unfollow":"follow", vidObj.userid).then(resp=>{
@@ -124,8 +124,10 @@ export default props => {
                         usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}
                       </Text>
                     </TouchableOpacity>
+                  </View>
+
                 </View>
-              </SafeAreaView>
+              </View>
           </Modal>
   
           <View style={styles.searchContainer}>
@@ -155,7 +157,14 @@ export default props => {
 }
 
 const styles  = StyleSheet.create ({
-   
+    closeBtn:{
+      backgroundColor:'white',
+      borderRadius:3,
+      position:'absolute',
+      zIndex:2,
+      right:20,
+      // top:10,
+    },
     searchContainer:{
         marginTop:10,
         width:'95%',
@@ -164,18 +173,24 @@ const styles  = StyleSheet.create ({
     },
     shareBtns:{
       flexDirection:'row', 
-      paddingTop:15, 
-      paddingBottom:15, 
+      // paddingTop:15, 
+      // marginTop:15,
+      bottom:10,
+      position:'absolute',
+      // paddingBottom:15, 
       paddingLeft:20, 
-      backgroundColor:'rgb(0,0,0)', 
-      position:'absolute', width:'100%', 
-      bottom:Platform.OS==="ios"?75:48
+      // backgroundColor:'rgb(0,0,0)', 
+      // position:'absolute', width:'100%', 
+      // bottom:Platform.OS==="ios"?75:48
     },
     followBtnContainer:{
-      position:'absolute',
+      // position:'absolute',
       paddingHorizontal:10,
-      right:20,
-      top:10,
+      // right:20,
+      // top:10,
+      position:'relative',
+      marginLeft:'22%',
+      // right:20,
       borderRadius:6,
       paddingVertical:5, 
     },
@@ -188,13 +203,15 @@ const styles  = StyleSheet.create ({
         justifyContent:'center'
     },
     centeredView: {
-      height:windowHeight/1.3,
+      // height:windowHeight/1.3,
+      // marginTop:-10,
+      // zIndex:100,
       width:windowWidth,
       // justifyContent:'center',
-      position:'absolute',
+      // position:'absolute',
       // top:Platform.OS==="android"?50:undefined,
       // alignItems: "center",
-      backgroundColor: "white",
+      backgroundColor: "black",
       // padding: 35,
       // alignItems: "center",
       shadowColor: "#000",
