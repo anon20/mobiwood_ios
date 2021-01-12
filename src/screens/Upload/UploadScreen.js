@@ -20,11 +20,11 @@ const UploadScreen = (props) => {
     const [filePath, setFilePath] = useState({});
     const athCntxt = React.useContext(AuthContext);
     const usrCntxt = React.useContext(UserContext);
-    const [talent,setTalent] = useState('Acting');
-    const [title, setTitle] = useState('aa');
-    const [socialMedia,setSocialMedia] = useState("aa")
-    const [follower,setFollower] = useState("aa")
-    const [desc,setDesc] = useState("aa");
+    const [talent,setTalent] = useState('');
+    const [title, setTitle] = useState('');
+    const [socialMedia,setSocialMedia] = useState("")
+    const [follower,setFollower] = useState("")
+    const [desc,setDesc] = useState("");
     const [isSelected, setSelection] = useState(false);
     const [isUploading,setIsUploading]  = useState(false);
     const [uploadPercent, setUploadPercent] = useState(0);
@@ -124,12 +124,12 @@ const UploadScreen = (props) => {
         // var vid = localStorage.getItem("");
         let vid = new Date().getTime()+"_"+parseInt(Math.random()*10000)
         
-        console.log(`filePath.path : ${filePath.path} filePath.uri : ${filePath.uri.substr(7)}`)
+        // console.log(`filePath.path : ${filePath.path} filePath.uri : ${filePath.uri.substr(7)}`)
         setIsUploading(true);
         let uploadTask = storage()
           .ref()
           .child("users/" + vid)
-          .putFile(filePath.uri.substr(7));
+          .putFile(Platform.OS==="android"?filePath.uri:filePath.uri.substr(7));
         uploadTask.on(
           "state_changed",
           (snapshot) => {
