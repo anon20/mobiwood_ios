@@ -221,9 +221,10 @@ const styles = ScaledSheet.create({
           paddingTop:"25@ms"
       },
       centeredView: {
-        height:windowHeight/1.3,
+        // height:windowHeight/1.3,
         width:windowWidth,
-        borderRadius:20,
+        borderRadius:8,
+        flex:0.9,
         // justifyContent:'center',
         alignSelf:'center',
         // alignItems: "center",
