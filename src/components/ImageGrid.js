@@ -24,13 +24,14 @@ export default function ImageGrid(props){
       ? setCurrentVisibleVideo(viewableItems.viewableItems[0].index)
       : null
     );
-    React.useEffect(()=>{
-      console.log(`currentVisibleVideo : ${currentVisibleVideo}`);
-    },[currentVisibleVideo])
+    // React.useEffect(()=>{
+    //   console.log(`currentVisibleVideo : ${currentVisibleVideo}`);
+    // },[currentVisibleVideo])
     return(
         <View style={styles.imageGrid}>
             <FlatList 
               onViewableItemsChanged={onViewRef.current}
+              showsVerticalScrollIndicator={false}
               viewabilityConfig={viewConfigRef.current}
               ref={input => (flatListRef = input)}
               data = {videoContext.videos}
@@ -41,7 +42,7 @@ export default function ImageGrid(props){
                 <CircleTop navigation={props.navigation} />
                 :null
                 }
-                  <View style={{paddingTop:5}}>
+                  <View style={{paddingTop:5, flex:0.2}}>
                   {/* {console.log(`item.profile : ${item.profile}`)} */}
 
                     {
@@ -62,8 +63,12 @@ export default function ImageGrid(props){
                       />
                     </TouchableOpacity>
                   </View>
-                  <ImageGridItem item={item} currentVisibleVideo={currentVisibleVideo} myIndex={index} setPlaying={setCurrentlyPlaying} currentlyPlaying={currentlyPlaying} />
-                  <View style={{paddingLeft:20, marginTop:12, marginBottom:20, display:'flex', flexDirection:'row'}}>
+                  <View style={{flex:0.7}}>
+                    <ImageGridItem item={item} currentVisibleVideo={currentVisibleVideo} myIndex={index} setPlaying={setCurrentlyPlaying} currentlyPlaying={currentlyPlaying} />
+
+                  </View>
+
+                  <View style={{paddingLeft:20, marginTop:12, marginBottom:20, flex:0.1, flexDirection:'row'}}>
                     <TouchableOpacity onPress={()=>{
                       usrCntxt.updateLikes(item.id, videoContext.vidLikesMap.get(item.id)).then(reslt => {
                         // console.log(`vidLiked : ${reslt}`)
@@ -95,16 +100,16 @@ export default function ImageGrid(props){
 const styles = ScaledSheet.create({
     imageGrid:{
         flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
+        // flexDirection: 'row',
+        // flexWrap: 'wrap',
+        // alignItems: 'flex-start',
     },
     imgContainer:{
-        padding:"0@ms",
+        // padding:"0@ms",
     },
     img:{
-        width:wp('100%'),
-        borderRadius:"0@ms"
+        // width:wp('100%'),
+        // borderRadius:"0@ms"
     },
     ImageGridItem:{
       display:'none'

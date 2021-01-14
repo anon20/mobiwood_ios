@@ -20,7 +20,7 @@ const UploadScreen = (props) => {
     const [filePath, setFilePath] = useState({});
     const athCntxt = React.useContext(AuthContext);
     const usrCntxt = React.useContext(UserContext);
-    const [talent,setTalent] = useState('');
+    const [talent,setTalent] = useState('Acting');
     const [title, setTitle] = useState('');
     const [socialMedia,setSocialMedia] = useState("")
     const [follower,setFollower] = useState("")
