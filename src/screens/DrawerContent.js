@@ -87,7 +87,8 @@ export default function DrawerContent(props){
 
 const styles = ScaledSheet.create({
     container:{
-        padding:"10@ms"
+        padding:"10@ms",
+        marginTop:-70
     },
     logoContainer:{
         flexDirection:"row",
@@ -100,7 +101,8 @@ const styles = ScaledSheet.create({
         resizeMode: 'contain',
     },
     icon:{
-        paddingTop:"25@ms",
+        paddingTop:"35@ms",
+        marginLeft:25
     },
     labelStyle:{
         color:"white",

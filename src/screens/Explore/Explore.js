@@ -57,7 +57,7 @@ export default props => {
                   </TouchableOpacity>
                   <VideoPlayer
                     video={{uri:vidObj.videoUrl}}
-                    style={{height: Platform.os==="ios"? windowHeight : windowHeight/1.16, width:windowWidth}}
+                    style={{height: Platform.os==="ios"? windowHeight : windowHeight/1.16, marginTop:-40, width:windowWidth}}
                     thumbnail={{uri: vidObj.thumbnail}}
                     onPlayPress={()=>{
                       firestore().collection("contest").doc(vidObj.id).update({
@@ -175,7 +175,7 @@ const styles  = StyleSheet.create ({
       flexDirection:'row', 
       // paddingTop:15, 
       // marginTop:15,
-      bottom:10,
+      bottom:25,
       position:'absolute',
       paddingBottom:15, 
       paddingLeft:20, 
