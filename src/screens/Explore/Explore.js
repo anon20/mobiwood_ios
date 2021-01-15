@@ -94,7 +94,7 @@ export default props => {
                       <Text style={{color:'white',fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={22} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
                       <Text style={{fontSize:18, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={22} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
-                    <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'red', }]} onPress={()=>{
+                    <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'#a70624', }]} onPress={()=>{
                       setFollowProcessing(true);
                       usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidObj.userid)?"unfollow":"follow", vidObj.userid).then(resp=>{
                         if(resp === "followed"||resp === "unfollowed")
@@ -119,7 +119,7 @@ export default props => {
                       })
                     }}>
                       <Text style={[styles.followBtn]}>
-                        {followProcessing?<ActivityIndicator size="small" color="white" />
+                        {followProcessing?<ActivityIndicator size={34} color="white" />
                         :
                         usrCntxt.fllwingMap.get(vidObj.userid)?'Following':'Follow'}
                       </Text>
@@ -188,16 +188,21 @@ const styles  = StyleSheet.create ({
       paddingHorizontal:10,
       // right:20,
       // top:10,
-      position:'relative',
-      marginLeft:'22%',
+      position:'absolute',
+      marginLeft:'59%',
+      height:33,
+      width:95,
+      textAlign:'center',
+      display:'flex',
+      alignItems:'center',
       // right:20,
       borderRadius:6,
       paddingVertical:5, 
     },
     followBtn:{
       color:'white', 
-      fontSize:18, 
-      fontWeight:'600', 
+      fontSize:17, 
+      fontWeight:'600',
     },
     icon:{
         justifyContent:'center'
