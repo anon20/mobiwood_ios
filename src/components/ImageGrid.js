@@ -85,7 +85,7 @@ export default function ImageGrid(props){
                     <Text style={{fontSize:17}}><FeatherIcon name='thumbs-up' size={20} color={videoContext.vidLikesMap.get(item.id)?'#3b5998':'black'} />  {videoContext.vidLikesMap.get(item.id)}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={{marginLeft:5}} onPress={()=>{usrCntxt.handleShare(item.id, item.description)}}>
-                    <Text style={{marginLeft:20, fontSize:17}} ><FeatherIcon  name='share-2' size={20} color='black' /> {item.shares?item.shares:0}</Text>
+                    <Text style={{marginLeft:20, fontSize:17}} ><FeatherIcon  name='share' size={20} color='black' /> {item.shares?item.shares:0} </Text>
                   </TouchableOpacity>
                   
                   <Text style={{marginLeft:25, fontSize:17,}}><FeatherIcon name='eye' size={20} color='black' /> {videoContext.noOfViewsMap.get(item.id)}</Text> 

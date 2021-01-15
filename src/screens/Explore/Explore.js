@@ -91,7 +91,7 @@ export default props => {
                       <Text style={{color:'white', fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon name='thumbs-up' size={22} color={!usrCntxt.likedVideosMap.get(vidObj.id)?'white':'#3b5998'} />  {vidCntxt.vidLikesMap.get(vidObj.id)}  </Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>{usrCntxt.handleShare(vidObj.id, vidObj.description)}}>
-                      <Text style={{color:'white',fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon  name='share-2' size={22} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
+                      <Text style={{color:'white',fontSize:18, marginTop:3, marginRight:8}}> <FeatherIcon  name='share' size={22} color='white' />  {vidObj.shares?vidObj.shares:0}  </Text>
                     </TouchableOpacity>
                       <Text style={{fontSize:18, marginTop:3, color:'white'}}> <FeatherIcon  name='eye' size={22} color='white' /> {" "}{vidCntxt.noOfViewsMap.get(vidObj.id)}</Text>
                     <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidObj.userid)?'grey':'#a70624', }]} onPress={()=>{
