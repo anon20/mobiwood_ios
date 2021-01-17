@@ -121,7 +121,7 @@ export default function Contestregistration({navigation}) {
             <TouchableOpacity onPress={()=>navigation.goBack()} style={{marginRight:10}}>
               <IconClose
                 name="chevron-back-outline"
-                size={40}
+                size={30}
                 color="black"
                 backgroundColor="white"
               />

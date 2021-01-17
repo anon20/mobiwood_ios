@@ -66,7 +66,7 @@ const HomeScreen = props => {
         //getData()
     }
     const handleReport = () => {
-      console.log(`vidId : ${vidId}, post : ${JSON.stringify(vidItem)}`)
+      // console.log(`vidId : ${vidId}, post : ${JSON.stringify(vidItem)}`)
       setModalVisible(false);
       if(reportValue != ""){
         firestore()
@@ -75,7 +75,7 @@ const HomeScreen = props => {
         .get()
         .then(async res => {
           const data = res.data();
-          console.log(`data from reporting ; ${data}`)
+          // console.log(`data from reporting ; ${data}`)
           let newReports = 0;
           if (data&&data.reports) {
             newReports = data.reports + 1;
@@ -99,7 +99,7 @@ const HomeScreen = props => {
             })
         })
         .catch(err => {
-          console.log(`err : ${JSON.stringify(err)}`)
+          // console.log(`err : ${JSON.stringify(err)}`)
           Alert.alert(`${err}`)
         })
       }

@@ -22,10 +22,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {UnauthorizedStack} from './navigations/UnauthorizedStack';
 // import VideosContext from './contexts/VideosContext.js';
 import DrawerStack from './navigations/DrawerStack';
+import ExploreProfile from './screens/Profile/ExploreProfile.js';
+
 import { FONT_BOLD } from './constants/typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Link } from '@react-navigation/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import Explore from './screens/Explore/Explore.js';
 function SettingsScreen() {
   return (
     <View style={{flex: 1,  padding:50, justifyContent: 'center', alignItems: 'center' }}>
@@ -122,7 +125,7 @@ const App = () => {
               <Stack.Screen name="Login" options={{headerShown:false}} component={UnauthorizedStack} />}
               <Stack.Screen name="contestScreen" options={{headerShown:false}} component={ContestRegistration} />
               <Stack.Screen name="contestScreenHome" options={{headerShown:false}} component={ContestRegistrationHome} />
-
+              <Stack.Screen name="exploreProfile" options={{headerShown:false}} component={ExploreProfile} />
               <Stack.Screen name="underConstruction" options={{headerShown:false}} component={UnderConstruction} />
             </Stack.Navigator>
           </NavigationContainer>

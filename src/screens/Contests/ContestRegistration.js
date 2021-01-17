@@ -151,17 +151,17 @@ export default function Contestregistration({navigation}) {
               pin: '',
             }}
             onSubmit={(values) => {
-              console.log(values);
+              // console.log(values);
               setIsLoading(true);
-              console.log('username: ', user);
-              console.log('input username: ', values.username);
+              // console.log('username: ', user);
+              // console.log('input username: ', values.username);
               if (values.username.trim() !== user.trim()) {
                 alert('Use the username used to sign in');
                 setIsLoading(false);
               } else {
-                console.log('here');
+                // console.log('here');
                 UUIDGenerator.getRandomUUID().then((uid) => setUuid(uid));
-                console.log('vid:', uuid);
+                // console.log('vid:', uuid);
                 // await AsyncStorage.setItem('vid',vid)
                 // await AsyncStorage.setItem('register',values)
                 var data = {
@@ -175,7 +175,7 @@ export default function Contestregistration({navigation}) {
                   gender: selGender,
                   pin: values.pin,
                 };
-                console.log(data);
+                // console.log(data);
                 firestore()
                   .collection('user')
                   .doc(auth().currentUser.uid)
@@ -327,7 +327,7 @@ export default function Contestregistration({navigation}) {
                       style={styles.radioContainer}
                       onPress={() => {
                         setAdult(res.key);
-                        console.log(res.key);
+                        // console.log(res.key);
                       }}>
                       <View style={styles.radioCircle}>
                         {adult === res.key && (

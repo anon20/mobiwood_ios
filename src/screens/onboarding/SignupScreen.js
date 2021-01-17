@@ -6,8 +6,11 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Modal,
+  ToastAndroid,
+  Platform,
   ActivityIndicator,
   Image,
+  Alert,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
@@ -163,9 +166,17 @@ const SignupScreen = ({navigation}) => {
                   })
                   .catch(function (error) {
                     console.log(error);
+                    if(Platform.OS==="android")
+                      ToastAndroid.show(`${JSON.stringify(error.code)}`, ToastAndroid.LONG);
+                    else
+                      Alert.alert(`${JSON.stringify(error.code)}`)
                   })
                   .catch(function (error) {
                     console.log(error);
+                    if(Platform.OS==="android")
+                      ToastAndroid.show(`${JSON.stringify(error.code)}`, ToastAndroid.LONG);
+                    else
+                      Alert.alert(`${JSON.stringify(error.code)}`)
                   });
               })
               .catch(function (error) {

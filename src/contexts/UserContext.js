@@ -188,7 +188,7 @@ const UserContextProvider = ({ children }) => {
     let allFollowers = []; 
     //retreiving all the followers of the video uploader
     await firestore().collection("user").doc(uid).get().then(resp => {
-      console.log(`resp.data : ${JSON.stringify(resp.data())}`);
+      // console.log(`resp.data : ${JSON.stringify(resp.data())}`);
       if(resp.data().followers)
         allFollowers = [...resp.data().followers];
     })

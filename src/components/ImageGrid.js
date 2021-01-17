@@ -1,14 +1,8 @@
 import React from 'react'
-import {View,Text,Image, FlatList, TouchableOpacity, ToastAndroid, Platform, Alert}from 'react-native'
+import { View,Text,Image, FlatList, TouchableOpacity, ToastAndroid, Platform }from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 import ImageGridItem from './ImageGridItem.js';
-import firestore from '@react-native-firebase/firestore';
-import Video from 'react-native-video-player';
-import {VideosContext} from '../contexts/VideosContext.js';
-import {
-    widthPercentageToDP as wp,
-    heightPercentageToDP as hp,
-  } from 'react-native-responsive-screen';
+import { VideosContext } from '../contexts/VideosContext.js';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { UserContext } from '../contexts/UserContext';
 import CircleTop from './CircleTop.js';
@@ -44,17 +38,33 @@ export default function ImageGrid(props){
                 }
                   <View style={{paddingTop:5, flex:0.2}}>
                   {/* {console.log(`item.profile : ${item.profile}`)} */}
-
+                  <TouchableOpacity onPress={() => {
+                       videoContext.setViewProfile(item.userid);
+                       videoContext.setViewDisplayName(item.displayName); props.navigation.navigate('exploreProfile')}}>
                     {
                       !item.profile?
-                    <Image source={require('../assets/images/user-placeholder.png')} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:0, borderColor:'#bbb',}} />:
-                    <Image source={{uri:item.profile}} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:1, borderColor:'#bbb',}} />
-                    
+                        <Image source={require('../assets/images/user-placeholder.png')} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:0, borderColor:'#bbb',}} />
+                      :
+                        <Image source={{uri:item.profile}} style={{width:40, height:40, marginLeft:10, marginTop:8, marginBottom:8, borderRadius:60, borderWidth:1, borderColor:'#bbb',}} />
                     }
-                    <View style={{}}>
-                      <Text style={{marginTop:8, marginLeft:12, fontWeight:'bold', fontSize:15, position:'absolute', top:-45, left:50}}>{!item.displayName?"MobiWood User":item.displayName}</Text>
-                      <Text style={{position:'absolute', top:-27, left:62, fontSize:12, color:'grey', display:'none', opacity:0}}>@{item.username}</Text>
-                      <Text style={{padding:10}}>{item.description}</Text>
+                  </TouchableOpacity>
+
+                    
+                    <View>
+                      <TouchableOpacity onPress={() => {
+                       videoContext.setViewProfile(item.userid);
+                       videoContext.setViewDisplayName(item.displayName); props.navigation.navigate('exploreProfile')}}>
+                        <Text style={{marginTop:8, marginLeft:12, fontWeight:'bold', fontSize:15, position:'absolute', top:-45, left:50}}>
+                          {!item.displayName?"MobiWood User":item.displayName}
+                        </Text>
+                      </TouchableOpacity>
+                        <Text style={{position:'absolute', top:-27, left:62, fontSize:12, color:'grey', display:'none', opacity:0}}>
+                          @{item.username}
+                        </Text>
+                        <Text style={{padding:10}}>
+                          {item.description}
+                        </Text>
+                      
                     </View>
                     <TouchableOpacity style={{position:'absolute', right:20, marginTop:20 }} onPress={() => props.reportModal(item.id, item, true)}>
                       <FeatherIcon
@@ -99,18 +109,10 @@ export default function ImageGrid(props){
 
 const styles = ScaledSheet.create({
     imageGrid:{
-        flex: 1,
-        // flexDirection: 'row',
-        // flexWrap: 'wrap',
-        // alignItems: 'flex-start',
+      flex: 1,
     },
-    imgContainer:{
-        // padding:"0@ms",
-    },
-    img:{
-        // width:wp('100%'),
-        // borderRadius:"0@ms"
-    },
+    imgContainer:{},
+    img:{},
     ImageGridItem:{
       display:'none'
     }

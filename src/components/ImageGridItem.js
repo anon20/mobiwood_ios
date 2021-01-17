@@ -17,6 +17,6 @@ export default props => {
     },[props.currentVisibleVideo]);
 
     return (
-        <Video resizeMode={"cover"} onLoad={itm => {console.log(`${itm}`)}} style={{flex:1, height:600}} fullScreenOnLongPress={true} defaultMuted={true} ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}} autoplay={props.myIndex === props.currentVisibleVideo}/>
+        <Video resizeMode={"cover"} onLoad={itm => {console.log(`${itm}`)}} style={{flex:1, height:500}} fullScreenOnLongPress={true} defaultMuted={true} ref={inpt => vidRef = inpt} onStart={()=>{props.setPlaying(props.myIndex)}} onPlayPress={()=>{props.setPlaying(props.myIndex)}}  thumbnail={{uri:props.item.thumbnail}} video={{uri:props.item.videoUrl}} autoplay={props.myIndex === props.currentVisibleVideo}/>
     )
 };

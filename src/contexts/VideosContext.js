@@ -16,6 +16,8 @@ const VideosContextProvider = ({ children }) => {
   const [vidLikesMap, setVidLikesMap] = useState(new Map());
   const [noOfViewsMap, setNoOfViewsMap] = useState(new Map());
   const [noOfFollowersMap, setNoOfFollowersMap] = useState(new Map());
+  const [viewProfile, setViewProfile] = useState(null);
+  const [viewDisplayName, setViewDisplayName] = useState(null);
   React.useEffect(() => {
     
     const fetchLimitedVideos = async () => {
@@ -24,7 +26,7 @@ const VideosContextProvider = ({ children }) => {
     if (!initialCount) await AsyncStorage.setItem("count", '0');
     if (!timestamp) AsyncStorage.setItem("lastLoad", JSON.stringify(new Date().getDate()));
     const difference = Math.floor(new Date() - new Date(timestamp)) / (1000 * 60 * 60 * 24);
-    console.log(Math.floor(difference / (1000 * 60 * 60 * 24)));
+    // console.log(Math.floor(difference / (1000 * 60 * 60 * 24)));
       const getCount = await AsyncStorage.getItem("count");
       const count = parseInt(getCount);
       let vids = [];
@@ -89,6 +91,10 @@ const VideosContextProvider = ({ children }) => {
       vidLikesMap:vidLikesMap, 
       noOfFollowersMap:noOfFollowersMap, 
       noOfViewsMap:noOfViewsMap,
+      viewProfile:viewProfile,
+      viewDisplayName:viewDisplayName,
+      setViewDisplayName:setViewDisplayName,
+      setViewProfile:setViewProfile,
       setNoOfFollowersMap:setNoOfViewsMap,
       setNoOfFollowersMap:setNoOfFollowersMap, 
       setVidLikesMap:setVidLikesMap 

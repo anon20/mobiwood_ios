@@ -9,7 +9,7 @@ export default props => {
 
   const onAuthStateChanged = (u) => {
     if (u && u.uid) {
-      console.log(`USER DETAILS : ${JSON.stringify(u)}`)
+      // console.log(`USER DETAILS : ${JSON.stringify(u)}`)
       setUser(u);
       setUid(u.uid);
     }
