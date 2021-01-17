@@ -192,7 +192,7 @@ const UserContextProvider = ({ children }) => {
 
     let allFollowers = []; 
     //retreiving all the followers of the video uploader
-    await firestore().collection("user").doc(uid).get().then(resp => {
+    await firestore().collection("user").doc(userId).get().then(resp => {
       // console.log(`resp.data : ${JSON.stringify(resp.data())}`);
       if(resp.data().followers)
         allFollowers = [...resp.data().followers];
@@ -229,7 +229,7 @@ const UserContextProvider = ({ children }) => {
     //updating video uploader's followers list
     console.log(`allFollowers before : ${JSON.stringify(allFollowers)}, myuid : ${uid}`)
     return firestore().collection("user").doc(userId).update({
-      followers:[...allFollowers]
+      followers:allFollowers
     })
     .then(resp => {
       // console.log(`YO`)
