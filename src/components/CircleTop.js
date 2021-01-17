@@ -50,8 +50,8 @@ const styles = ScaledSheet.create({
       flex: 1,
       resizeMode: "cover",
       justifyContent: "center",
-      width: Platform.OS==="ios"?75:70,
-      height: Platform.OS==="ios"?75:70,
+      width: Platform.OS==="ios"?65:70,
+      height: Platform.OS==="ios"?65:70,
     },circles:
     {
       borderWidth:0,
