@@ -85,7 +85,7 @@ const UserContextProvider = ({ children }) => {
           // console.log(`resp :${JSON.stringify(resp.data())}`);
           // console.log(`likedVideos : ${userData["likedVideos"]}`)
           // if(resp)
-          if(userData&&userData.followers&&userData.followers.length)
+          if(userData&&userData.following&&userData.following.length)
           {
             userData.following.forEach(data => {
               tmpFllwingMp.set(data, true);
@@ -97,10 +97,12 @@ const UserContextProvider = ({ children }) => {
               likedVidMap.set(data, true);
             })
           }
+
           setFollowing(userData&&userData.following&&userData.following.length?userData.following:[]);
           setFollowers(userData&&userData.followers&&userData.followers.length?userData.followers:[]);
           setLikedVideosMap(likedVidMap);
           setFllwingMap(tmpFllwingMp);
+          console.log(`following : ${JSON.stringify(userData.following)}`)
           // console.log(`Following data is set too`)
         })
       }
@@ -185,7 +187,9 @@ const UserContextProvider = ({ children }) => {
   };
 
   const updateFollowing = async (action, userId) => {
-    // alert(`userId : ${userId}`)
+    // console.log(`userId : ${userId}`)
+    console.log(`other person from UserContext.js : ${userId}`)
+
     let allFollowers = []; 
     //retreiving all the followers of the video uploader
     await firestore().collection("user").doc(uid).get().then(resp => {
@@ -196,22 +200,26 @@ const UserContextProvider = ({ children }) => {
     // console.log(`${action} ${userId}`);
     let returnMesg="followed"
     let newFollowing = following;
+    // console.log(`before adding  following : ${newFollowing}`);
     if (action === "follow") {
       setFollowing([...following, userId]);
       newFollowing = [...newFollowing, userId];
-    } else {
+      allFollowers.push(uid);
+      // console.log(`after adding userid : ${userId}, following : ${newFollowing}`);
+    } 
+    else 
+    {
       returnMesg = "unfollowed"
       allFollowers = allFollowers.filter(id => id != uid);
       if (following && following.length) {
         newFollowing = following.filter((follower) => follower !== userId);
         setFollowing(newFollowing);
-      } else {
+      } 
+      else {
         setFollowing([]);
         newFollowing = [];
       }
     }
-    
-    
     // console.log(`allFolowers : ${JSON.stringify(allFollowers)}`)
     //updating user's following list
     await firestore().collection("user").doc(uid).update({
@@ -219,8 +227,9 @@ const UserContextProvider = ({ children }) => {
     });
     // console.log(`following data updated`)
     //updating video uploader's followers list
+    console.log(`allFollowers before : ${JSON.stringify(allFollowers)}, myuid : ${uid}`)
     return firestore().collection("user").doc(userId).update({
-      followers:[...allFollowers, uid]
+      followers:[...allFollowers]
     })
     .then(resp => {
       // console.log(`YO`)

@@ -23,30 +23,35 @@ export default props => {
     const [followProcessing, setFollowProcessing] = useState(false);
     const [currentUserID, setCurrentUserID] = useState(null);
     const { userDetails, uid } = React.useContext(AuthContext);
+    async function getData(){
+      let tmp = {};
+      console.log(`other person from ExploreProfile.js : ${vidCntxt.viewProfile}`)
+      await firestore().collection("user").doc(vidCntxt.viewProfile).get().then(resp => {
+          tmp.followers = resp.data().followers;
+          console.log(`followers from ExploreProfile : ${JSON.stringify(resp.data().followers)}`)
+          tmp.following = resp.data().following;
+          tmp.profilePhoto = resp.data().profile;
+      });
+      let vidArray = [];
+      let vidObj = await firestore().collection("user").doc(vidCntxt.viewProfile).collection("videos")
+      let vids = await vidObj.get();
+      vids.forEach(vid => {
+
+          let y = vid.data();
+          y.id = vid.id;
+          y.userid = vidCntxt.viewProfile;
+          vidArray.push(vid.data());
+          // console.log(`vid from vids array : ${JSON.stringify(vid.data())}`)
+      })
+      tmp.myVideos = vidArray;
+      setUserCont(tmp);
+
+    }
+
+
     React.useEffect(()=>{
         // userCont.updateFollowers();
-        async function getData(){
-            let tmp = {};
-            await firestore().collection("user").doc(vidCntxt.viewProfile).get().then(resp => {
-                tmp.followers = resp.data().followers;
-                tmp.following = resp.data().following;
-                tmp.profilePhoto = resp.data().profile;
-            });
-            let vidArray = [];
-            let vidObj = await firestore().collection("user").doc(vidCntxt.viewProfile).collection("videos")
-            let vids = await vidObj.get();
-            vids.forEach(vid => {
-
-                let y = vid.data();
-                y.id = vid.id;
-                y.userid = vidCntxt.viewProfile;
-                vidArray.push(vid.data());
-                console.log(`vid from vids array : ${JSON.stringify(vid.data())}`)
-            })
-            tmp.myVideos = vidArray;
-            setUserCont(tmp);
-
-        }
+        
         getData();
     },[])
 
@@ -172,6 +177,8 @@ export default props => {
                               if(resp === "followed"||resp === "unfollowed")
                               {
                                 setFollowProcessing(false);
+                                getData();
+
                                 if(Platform.OS === "android")
                                 {  
                                   if(resp === "followed")
