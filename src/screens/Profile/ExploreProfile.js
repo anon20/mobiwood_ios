@@ -3,6 +3,7 @@ import {View, Text, Image, ActivityIndicator, SafeAreaView, StyleSheet, ToastAnd
 import {UserContext} from '../../contexts/UserContext.js';
 import {AuthContext} from "../../contexts/AuthContext.js";
 import {VideosContext} from '../../contexts/VideosContext.js';
+
 import VideoPlayer from 'react-native-video-player';
 
 import VideoDisplayModal from '../../components/VideoDisplayModal.js';
@@ -16,10 +17,11 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default props => {
     const [userCont, setUserCont] = useState(null);
+    const usrCntxt = React.useContext(UserContext);
     const [vidObj, setVidObj] = useState(vidObj);
     const vidCntxt = React.useContext(VideosContext);
     const [followProcessing, setFollowProcessing] = useState(false);
-
+    const [currentUserID, setCurrentUserID] = useState(null);
     const { userDetails, uid } = React.useContext(AuthContext);
     React.useEffect(()=>{
         // userCont.updateFollowers();
@@ -34,6 +36,7 @@ export default props => {
             let vidObj = await firestore().collection("user").doc(vidCntxt.viewProfile).collection("videos")
             let vids = await vidObj.get();
             vids.forEach(vid => {
+
                 let y = vid.data();
                 y.id = vid.id;
                 y.userid = vidCntxt.viewProfile;
@@ -160,7 +163,34 @@ export default props => {
                         }
 
                       </View>
-                
+
+
+
+                            <TouchableOpacity style={[styles.followBtnContainer, {backgroundColor:usrCntxt.fllwingMap.get(vidCntxt.viewProfile)?'grey':'#a70624', }]} onPress={()=>{
+                            setFollowProcessing(true);
+                            usrCntxt.updateFollowing(usrCntxt.fllwingMap.get(vidCntxt.viewProfile)?"unfollow":"follow", vidCntxt.viewProfile).then(resp=>{
+                              if(resp === "followed"||resp === "unfollowed")
+                              {
+                                setFollowProcessing(false);
+                                if(Platform.OS === "android")
+                                {  
+                                  if(resp === "followed")
+                                    ToastAndroid.show("Following", ToastAndroid.LONG)
+                                  else
+                                    ToastAndroid.show("Unfollowed", ToastAndroid.LONG)
+                                }
+                              }
+                            })
+                          }}>
+                            <Text style={[styles.followBtn]}>
+                              {followProcessing?<ActivityIndicator size={34} color="white" />
+                              :
+                              usrCntxt.fllwingMap.get(vidCntxt.viewProfile)?'Following':'Follow'}
+                            </Text>
+                          </TouchableOpacity>
+
+
+
                         <Text style={{fontSize:20,fontWeight:'700',alignSelf:'center', marginBottom:10,marginTop:20}}>{vidCntxt.viewDisplayName}</Text>
                         <View style={{flexDirection:'row',justifyContent:'space-around',marginTop:5}}>
                                 <Text style={{fontSize:16,fontWeight:'600'}}>Followers : {userCont.followers&&userCont.followers.length!=0?userCont.followers.length:0} </Text>
@@ -205,6 +235,23 @@ export default props => {
 const styles = StyleSheet.create({
     layoutA :{height:150,width:windowWidth/3,backgroundColor:'black'},
     layoutB:{height:150,width:windowWidth/3,backgroundColor:'white'} ,
+    followBtnContainer:{
+      paddingHorizontal:10,
+      height:33,
+      alignSelf:'center',
+      marginTop:20,
+      width:95,
+      textAlign:'center',
+      display:'flex',
+      alignItems:'center',
+      borderRadius:6,
+      paddingVertical:5, 
+    },
+    followBtn:{
+      color:'white', 
+      fontSize:17, 
+      fontWeight:'600',
+    },
     centeredView: {
         height:windowHeight/1.4,
         width:windowWidth-50,

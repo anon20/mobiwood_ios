@@ -185,6 +185,7 @@ const UserContextProvider = ({ children }) => {
   };
 
   const updateFollowing = async (action, userId) => {
+    alert(`userId : ${userId}`)
     let allFollowers = []; 
     //retreiving all the followers of the video uploader
     await firestore().collection("user").doc(uid).get().then(resp => {
