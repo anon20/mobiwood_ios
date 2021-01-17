@@ -38,7 +38,7 @@ export default props => {
                 y.id = vid.id;
                 y.userid = vidCntxt.viewProfile;
                 vidArray.push(vid.data());
-                // console.log(`vid from vids array : ${JSON.stringify(vid)}`)
+                console.log(`vid from vids array : ${JSON.stringify(vid.data())}`)
             })
             tmp.myVideos = vidArray;
             setUserCont(tmp);

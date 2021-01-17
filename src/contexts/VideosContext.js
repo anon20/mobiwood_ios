@@ -18,9 +18,9 @@ const VideosContextProvider = ({ children }) => {
   const [noOfFollowersMap, setNoOfFollowersMap] = useState(new Map());
   const [viewProfile, setViewProfile] = useState(null);
   const [viewDisplayName, setViewDisplayName] = useState(null);
-  React.useEffect(() => {
-    
-    const fetchLimitedVideos = async () => {
+
+
+  const fetchLimitedVideos = async () => {
     const initialCount = await AsyncStorage.getItem("count");
     const timestamp = await AsyncStorage.getItem("lastLoad");
     if (!initialCount) await AsyncStorage.setItem("count", '0');
@@ -80,6 +80,11 @@ const VideosContextProvider = ({ children }) => {
           }
         })
     };
+
+
+  React.useEffect(() => {
+    
+    
     fetchLimitedVideos();
   }, []);
   
@@ -97,7 +102,8 @@ const VideosContextProvider = ({ children }) => {
       setViewProfile:setViewProfile,
       setNoOfFollowersMap:setNoOfViewsMap,
       setNoOfFollowersMap:setNoOfFollowersMap, 
-      setVidLikesMap:setVidLikesMap 
+      setVidLikesMap:setVidLikesMap,
+      fetchLimitedVideos: fetchLimitedVideos
     }}>
       {usrCntxt.vidShared?<SharedVideo />
         :

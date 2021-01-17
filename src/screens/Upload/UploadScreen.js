@@ -141,7 +141,7 @@ const UploadScreen = (props) => {
             console.log(err);
           },
           () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            uploadTask.snapshot.ref.getDownloadURL().then( downloadURL => {
               let uploadData = {
                 videoUrl: downloadURL,
                 talent: talent,

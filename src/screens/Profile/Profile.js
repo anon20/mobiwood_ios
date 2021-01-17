@@ -15,23 +15,57 @@ export default props => {
     let userCont = React.useContext(UserContext);
     const vidCntxt = React.useContext(VideosContext);
     const { userDetails, uid } = React.useContext(AuthContext);
+
+    const showVideos = () => {
+      // console.log(`videodata received from context is : ${JSON.stringify(vidCntxt.videos)}`)
+      // firestore().collection("user").doc(uid).collection("videos").get().then(resp => {
+      //   resp.forEach(item => {
+      //     console.log(`resp from Profile.js : ${JSON.stringify(item.data())}`);
+      //     console.log(`********************************`)
+      //     console.log(`ID of the video is : ${item.id}`);
+      //     console.log(`********************************`)
+
+      //   })
+      // })
+    }
+
+    const deleteVideo = (vidId) => {
+      Alert.alert("Are you Sure?", "Delete This Video?", [{text:'NO', onPress:()=>{}}, {text:'YES', onPress:()=>{
+        firestore().collection("user").doc(uid).collection("videos").doc(vidId).delete().then(resp => {
+          firestore().collection("contest").doc(vidId).delete().then(resp => {
+            if(Platform.OS === "android")
+              ToastAndroid.show(`Video Removed Successfully!`, ToastAndroid.LONG);
+            else
+              Alert.alert(`Video Removed Successfully`);
+            vidCntxt.fetchLimitedVideos();
+          });
+        });
+      }}])
+      
+    }
+
     React.useEffect(()=>{
         // userCont.updateFollowers();
+        showVideos();
     },[])
 
-    const HandleClick = (e,t) => {
-        setVideoUrl(e);
-        setThumbnail(t)
-        setModalVisible(true);
-      }
+    
       
  
   const [modalVisible, setModalVisible] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
   const [thumbnail,setThumbnail] = useState('');
+  const [activeVidID, setActiveVidID] = useState(null);
   const [filePath, setFilePath] = useState({});
   const [uploadPercent, setUploadPercent] = useState(0);
 
+  const HandleClick = (e,t, id) => {
+    // console.log(`videoUrl : ${e}`)
+    setVideoUrl(e);
+    setThumbnail(t);
+    setActiveVidID(id);
+    setModalVisible(true);
+  }
 
   const chooseFile = () => {
     let options = {
@@ -94,6 +128,7 @@ export default props => {
 
     return (
         <SafeAreaView style={{flex:1}}>
+        
         <Modal
             animationType="fade"
             transparent={true}
@@ -109,17 +144,22 @@ export default props => {
                   <TouchableOpacity onPress={()=>{setModalVisible(false)}} style={{backgroundColor:'white', borderRadius:1000, borderWidth:2, borderColor:'black', position:'absolute', zIndex:10, top:-10, right:-10, alignSelf:'flex-end'}}>
                   
                     <FeatherIcon  name='x' size={30} color='grey' />
-                </TouchableOpacity>
-                <VideoPlayer
+                  </TouchableOpacity>
+                  <VideoPlayer
                     video={{uri:videoUrl}}
                     style={{height:windowHeight/1.45,width:windowWidth-50, borderTopStartRadius:20, borderTopEndRadius:20}}
                     thumbnail={{uri: thumbnail}}
                   />
+                  <TouchableOpacity onPress={()=>{
+                    deleteVideo(activeVidID);
+                  }} style={{padding:10, backgroundColor:'red', borderRadius:5, marginTop:3}}>
+                    <Text style={{color:'white'}}>Delete Video</Text>
+                  </TouchableOpacity>
                 </View>
             </View>
             
           </Modal>
-            {console.log(`userCont :  ${JSON.stringify(userCont.profilePhoto)}`)}
+            {/* {console.log(`userCont :  ${JSON.stringify(userCont.profilePhoto)}`)} */}
             {userCont?
                 <>
                 
@@ -158,7 +198,7 @@ export default props => {
                         renderItem={({item, index})=>(
                             <View key={index}  style={styles.layoutA}>
                                 {console.log(item)}
-                                <TouchableOpacity onPress={()=>HandleClick(item.videoUrl,item.thumbnail)} >
+                                <TouchableOpacity onPress={()=>HandleClick(item.videoUrl,item.thumbnail, item.id)} >
                                 <Image
                             source={item.thumbnail?{uri:item.thumbnail}:(require('../../assets/images/loading.jpg'))}
                             style={{height:"100%",width:"100%"}}
@@ -187,7 +227,7 @@ const styles = StyleSheet.create({
     layoutA :{height:150,width:windowWidth/3,backgroundColor:'black'},
     layoutB:{height:150,width:windowWidth/3,backgroundColor:'white'} ,
     centeredView: {
-        height:windowHeight/1.4,
+        height:windowHeight/1.35,
         width:windowWidth-50,
         justifyContent:'center',
         alignSelf:'center',
