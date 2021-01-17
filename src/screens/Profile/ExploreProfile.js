@@ -201,7 +201,8 @@ export default props => {
                     {/* {console.log(`MYVIDEOS : ${JSON.stringify(userCont.myVideos)}`)} */}
                     {userCont.myVideos!=""? 
                     <FlatList 
-                        data={userCont.myVideos}
+                        // data={userCont.myVideos
+                        data={vidCntxt.videos.filter(item=>item.userid === vidCntxt.viewProfile)}
                         numColumns={3}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({item, index})=>(
