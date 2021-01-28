@@ -8,6 +8,7 @@ import {
   Modal,
   ActivityIndicator,
   Image,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -35,10 +36,10 @@ const LoginScreen = ({navigation}) => {
     <SafeAreaView>
       <KeyboardAvoidingView>
         <ScrollView style={styles.abovekeyboardContainer}>
-          <Image 
-                source={require('../../assets/images/logo.png')}
-                style={styles.logo} 
-                />
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={styles.logo}
+          />
           <Text style={[styles.heading]}>Log In to Your Account</Text>
           {/* <View style={styles.socialBtnContainer}>
            <Icon.Button
@@ -146,7 +147,7 @@ const LoginScreen = ({navigation}) => {
                     <Text style={styles.error}>{errors.username}</Text>
                   )}
                   <InputField
-                  type="text"
+                    type="text"
                     placeholder="Username"
                     placeholderTextColor="#656565"
                     onChangeText={handleChange('username')}
@@ -157,9 +158,9 @@ const LoginScreen = ({navigation}) => {
                   {errors.password && (
                     <Text style={styles.error}>{errors.password}</Text>
                   )}
-                  
+
                   <InputField
-                  type="password" 
+                    type="password"
                     placeholder="Password"
                     secureTextEntry
                     placeholderTextColor="#656565"
@@ -169,28 +170,94 @@ const LoginScreen = ({navigation}) => {
                     containerStyles={styles.containerStyles}
                   />
                   <Text
-              onPress={() => navigation.navigate('ResetPassword')}
-              style={[styles.txt, {marginTop: 0, textAlign: "right", marginBottom: 20, color:'grey'}]}>
-              Forgot Password?
-            </Text>
+                    onPress={() => navigation.navigate('ResetPassword')}
+                    style={[
+                      styles.txt,
+                      {
+                        marginTop: 0,
+                        textAlign: 'right',
+                        marginBottom: 20,
+                        color: 'grey',
+                        fontSize: 16,
+                      },
+                    ]}>
+                    Forgot Password{' '}
+                    <IconClose
+                      name="help-circle-outline"
+                      size={16}
+                      color="grey"></IconClose>
+                  </Text>
                   <TouchableOpacity
                     style={styles.btn}
                     onPress={handleSubmit}
                     disabled={!isValid}>
-
                     {isLoading ? (
-                      <ActivityIndicator animating={isLoading} color="white" style={{position:'absolute', marginTop:18,  width:200, }} />
-                 
+                      <ActivityIndicator
+                        animating={isLoading}
+                        color="white"
+                        style={{
+                          position: 'absolute',
+                          marginTop: 18,
+                          width: 200,
+                        }}
+                      />
                     ) : (
-                      <Text style={[styles.btnText, {fontSize:22, flex: 1, justifyContent: "center", alignItems: "center", display:'flex', alignItems:'center', justifyContent:'center'}]}>Log In </Text>
+                      <Text
+                        style={[
+                          styles.btnText,
+                          {
+                            fontSize: 18,
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            marginTop: Platform.OS === 'android' ? 2 : 4,
+                          },
+                        ]}>
+                        Log In{' '}
+                        <IconClose
+                          name="arrow-forward-outline"
+                          size={14}
+                          color="white"></IconClose>
+                      </Text>
                     )}
                   </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: Platform.OS === 'android' ? 10 : 20,
+                      textAlign: 'center',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      width: '100%',
+                    }}>
+                    <Text> Don't have an account? </Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('Signup')}>
+                      <Text style={{color: '#000', fontWeight: '800'}}>
+                        <IconClose
+                          name="lock-closed-outline"
+                          size={14}
+                          color="black"></IconClose>{' '}
+                        Register
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </>
               )}
             </Formik>
           </View>
           <View
-            style={{flexDirection: 'row', marginBottom: 15, flexWrap: 'wrap', display: 'none'}}>
+            style={{
+              flexDirection: 'row',
+              marginBottom: 15,
+              flexWrap: 'wrap',
+              display: 'none',
+            }}>
             <Text>By logging, you agree to our</Text>
             <TouchableOpacity onPress={() => toggleTnc(true)}>
               <Text style={{color: '#4299e1'}}> Terms & Conditions</Text>
@@ -225,30 +292,10 @@ const LoginScreen = ({navigation}) => {
               </ScrollView>
             </View>
           </Modal>
-
-          <View style={[styles.altText, {marginTop:-20}]}>
-          
-            <Text style={[styles.test], { fontSize:20, marginTop:-10, marginBottom:10, marginLeft:'auto', marginRight:'auto', fontWeight:'bold'}}>OR</Text>
-            
-            
-            <TouchableOpacity
-                    style={styles.btn}
-                    onPress={() => navigation.navigate('Signup')}>
-
-              <Text style={{color:'white', fontSize:22, fontWeight:'bold', paddingTop:Platform.OS==="ios"?2:2}}>
-              Create an account
-              </Text> 
-              </TouchableOpacity>
-
-          </View>
-          
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-
-
 
 export {LoginScreen};
