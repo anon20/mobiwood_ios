@@ -47,10 +47,10 @@ export default function ImageGrid(props) {
   //   this.flatListRef.scrollToIndex({animated: true, index: 5});
   // });
 
-  //const date = AuthContext.getItem('uploadTime');
-  // React.useEffect(()=>{
+  // const date = AuthContext.getItem('uploadTime');
+  // React.useEffect(() => {
   //   console.log(`currentVisibleVideo : ${currentVisibleVideo}`);
-  // },[currentVisibleVideo])
+  // }, [currentVisibleVideo]);
   return (
     <View style={styles.imageGrid}>
       <FlatList

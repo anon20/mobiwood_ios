@@ -7,7 +7,6 @@ import {ContestStack} from './navigations/DrawerStack.js';
 
 import {Image, Text, View, Platform, Linking, scrollToItem} from 'react-native';
 import auth from '@react-native-firebase/auth';
-
 import VideosContext from './contexts/VideosContext.js';
 import AuthContext from './contexts/AuthContext.js';
 import UserContext from './contexts/UserContext.js';
@@ -46,7 +45,7 @@ function SettingsScreen() {
             height: 41,
             alignSelf: 'center',
             marginBottom: 20,
-            marginTop: 20,
+            marginTop: '15%',
           }}
         />
         <Text
@@ -59,14 +58,14 @@ function SettingsScreen() {
           Help us to serve you better
         </Text>
         <Text style={{textAlign: 'justify', fontSize: 17}}>
-          we are creating world's biggest Talent community where MobiWood will
-          support all talented people to grow and earn + community people will
-          help each other to grow and learn.
+          We are growing and merging talents with us. We are helping all the
+          talented artists to build a strong community which helps you to learn,
+          earn and grow.
         </Text>
         <Text style={{textAlign: 'justify', fontSize: 17, marginTop: 10}}>
-          Help us by suggesting ideas that what we do more to improve your
-          talent's quality, to make you earn more, to make this community more
-          strong.
+          Support and help us by providing your valuable suggestions and ideas
+          to improve our platform and our community. Your inputs and reviews
+          would help us grow and build the talented community.
         </Text>
         <Text
           style={{
@@ -74,11 +73,17 @@ function SettingsScreen() {
             fontSize: 18,
             marginTop: 10,
             fontWeight: 'bold',
+            marginBottom: 5,
           }}>
-          Share your ideas on
+          Share your feedback on
         </Text>
         <Text
-          style={{textAlign: 'center', fontSize: 17, marginTop: 0}}
+          style={{
+            textAlign: 'center',
+            fontSize: 17,
+            marginTop: 0,
+            marginBottom: 10,
+          }}
           onPress={() => {
             Linking.openURL('mailto:feedback@mobiwood.net');
           }}>

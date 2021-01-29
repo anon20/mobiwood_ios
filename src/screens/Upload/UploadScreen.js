@@ -13,6 +13,7 @@ import {
   Platform,
   Alert,
 } from 'react-native';
+
 //import HeaderIcon from '../../HOC/HeaderIcon.js';
 import Video from 'react-native-video';
 import ImagePicker, {launchImageLibrary} from 'react-native-image-picker';
@@ -298,14 +299,14 @@ const UploadScreen = (props) => {
               <DropDownPicker
                 items={[
                   {value: 'Acting', label: 'Acting'},
-                  {value: 'Singing', label: 'Singing'},
+                  {value: 'Acrobatic', label: 'Acrobatic'},
                   {value: 'Dancing', label: 'Dancing'},
-                  {label: 'Teach to Make Superstars', value: 'teaching'},
                   {value: 'Comedy', label: 'Comedy'},
                   {value: 'Music', label: 'Music'},
                   {value: 'Magic', label: 'Magic'},
-                  {value: 'Acrobatic', label: 'Acrobatic'},
                   {value: 'Others', label: 'Others'},
+                  {value: 'Singing', label: 'Singing'},
+                  {label: 'Teach to Make Superstars', value: 'teaching'},
                 ]}
                 defaultIndex={talent}
                 placeholder={'Select a Category'}

@@ -297,11 +297,17 @@ const SignupScreen = ({navigation}) => {
                           />
                         </Text>
                       ) : (
-                        <Text style={styles.CreateAccountBtn}>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontSize: 20,
+                            fontWeight: '600',
+                            paddingTop: 2,
+                          }}>
                           Proceed{' '}
                           <IconClose
                             name="arrow-forward-outline"
-                            size={14}
+                            size={20}
                             color="white"></IconClose>
                         </Text>
                       )}

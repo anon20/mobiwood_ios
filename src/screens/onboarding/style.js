@@ -66,6 +66,7 @@ export default ScaledSheet.create({
     color: '#f7fafc',
     alignSelf: 'center',
     fontWeight: 'bold',
+    paddingTop: 4,
   },
   terms: {
     fontSize: '15@s',

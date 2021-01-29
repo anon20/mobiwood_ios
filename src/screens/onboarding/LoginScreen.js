@@ -41,7 +41,7 @@ const LoginScreen = ({navigation}) => {
             style={styles.logo}
           />
           <Text style={[styles.heading]}>Log In to Your Account</Text>
-          {/* <View style={styles.socialBtnContainer}>
+          {/* <View style={styles.socialBtnContainer}> 
            <Icon.Button
             name="google"
             backgroundColor="#dc4e41"
@@ -214,6 +214,7 @@ const LoginScreen = ({navigation}) => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             marginTop: Platform.OS === 'android' ? 2 : 4,
+                            paddingTop: 0,
                           },
                         ]}>
                         Log In{' '}

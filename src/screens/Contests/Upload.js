@@ -152,25 +152,22 @@ export default function Upload({navigation}) {
       console.log('vidD', video);
       if (video.path || video.uri) {
         // MediaMeta.get(path)
-          // .then((metadata) => {
-            // // console.log(metadata.duration);
-            // if (metadata.duration > maxTime) {
-            //   Alert.alert(
-            //     'Sorry',
-            //     'Video duration must be less then 90 seconds',
-            //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-            //     {cancelable: false},
-            //   );
-            // } else {
-              const name = path.substring(
-                path.lastIndexOf('/') + 1,
-                path.length,
-              );
-              setSingleFile(name);
-              setVideoPath(video.path || video.uri);
-            // }
-          // })
-          // .catch((err) => console.error(err));
+        // .then((metadata) => {
+        // // console.log(metadata.duration);
+        // if (metadata.duration > maxTime) {
+        //   Alert.alert(
+        //     'Sorry',
+        //     'Video duration must be less then 90 seconds',
+        //     [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        //     {cancelable: false},
+        //   );
+        // } else {
+        const name = path.substring(path.lastIndexOf('/') + 1, path.length);
+        setSingleFile(name);
+        setVideoPath(video.path || video.uri);
+        // }
+        // })
+        // .catch((err) => console.error(err));
       }
     });
   };
@@ -262,13 +259,13 @@ export default function Upload({navigation}) {
               <DropDownPicker
                 items={[
                   {label: 'Acting', value: 'act'},
-                  {label: 'Singing', value: 'sing'},
-                  {label: 'Dancing', value: 'dance'},
+                  {label: 'Acrobatics', value: 'acrobatics'},
                   {label: 'Comedy', value: 'comedy'},
+                  {label: 'Dancing', value: 'dance'},
                   {label: 'Music', value: 'music'},
                   {label: 'Magic', value: 'magic'},
-                  {label: 'Acrobatics', value: 'acrobatics'},
                   {label: 'Others', value: 'others'},
+                  {label: 'Singing', value: 'sing'},
                 ]}
                 defaultValue=""
                 containerStyle={styles.containerStyles}
@@ -288,7 +285,8 @@ export default function Upload({navigation}) {
               {talentVal === 'Others' && (
                 <View>
                   <Text style={styles.label}>What's Your Talent</Text>
-                  <InputField  type="text"
+                  <InputField
+                    type="text"
                     placeholderTextColor="#a0aec0"
                     onChangeText={handleChange('other')}
                     onBlur={handleBlur('other')}
@@ -304,7 +302,8 @@ export default function Upload({navigation}) {
               )}
 
               <Text style={styles.label}>Title</Text>
-              <InputField  type="text"
+              <InputField
+                type="text"
                 placeholderTextColor="#a0aec0"
                 onChangeText={handleChange('title')}
                 onBlur={handleBlur('title')}
@@ -314,7 +313,8 @@ export default function Upload({navigation}) {
               {errors.title && <Text style={styles.error}>{errors.title}</Text>}
 
               <Text style={styles.label}>Write Something About the Video</Text>
-              <InputField  type="text"
+              <InputField
+                type="text"
                 placeholderTextColor="#a0aec0"
                 onChangeText={handleChange('about')}
                 onBlur={handleBlur('about')}
@@ -338,7 +338,8 @@ export default function Upload({navigation}) {
               <Text style={styles.label}>
                 Social Media With Highest Followers
               </Text>
-              <InputField  type="text"
+              <InputField
+                type="text"
                 placeholderTextColor="#a0aec0"
                 onChangeText={handleChange('social')}
                 onBlur={handleBlur('social')}
@@ -350,7 +351,8 @@ export default function Upload({navigation}) {
               )}
 
               <Text style={styles.label}>Followers Count on the Platform</Text>
-              <InputField  type="text"
+              <InputField
+                type="text"
                 placeholderTextColor="#a0aec0"
                 onChangeText={handleChange('count')}
                 onBlur={handleBlur('count')}
